@@ -1,0 +1,84 @@
+# Dokumentace a vydání formátu (samostatný workflow – kit je privátní, sdílený workflow z něj veřejné repo volat nemůže).
+#   push na main       -> kontrola + HTML dokumentace na GitHub Pages (bez PDF, rychlé)
+#   tag vX.Y           -> ZIP specifikace + GitHub Release
+#   tag docs-vX.Y.N    -> HTML + PDF ze specifikace vX.Y + GitHub Release
+# Image docs-kitu se bere z Makefile (IMAGE ?= ...). Image je privátní: v nastavení balíčku
+# ghcr.io/burespe1/ndic-docs-kit → Manage Actions access musí mít tento repozitář právo Read.
+name: docs
+on:
+  push:
+    branches: [main]
+    tags: ['v[0-9]+.[0-9]+', 'docs-v[0-9]+.[0-9]+.[0-9]+']
+  workflow_dispatch:
+
+concurrency: { group: 'docs-${{ github.ref }}', cancel-in-progress: true }
+
+jobs:
+  pages:
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-latest
+    permissions: { contents: read, packages: read, pages: write, id-token: write }
+    environment: { name: github-pages, url: '${{ steps.deploy.outputs.page_url }}' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: '${{ github.actor }}', password: '${{ secrets.GITHUB_TOKEN }}' }
+      - name: kontrola a HTML
+        run: |
+          IMAGE=$(sed -nE 's/^IMAGE[[:space:]]*\?=[[:space:]]*(\S+).*/\1/p' Makefile | head -1)
+          RUN="docker run --rm -v $GITHUB_WORKSPACE:/work -w /work -u root $IMAGE"
+          $RUN d2doc check .
+          $RUN d2doc build . --outputs html --out build
+          mkdir -p public && cp build/dist/*.html public/
+          for f in public/*-cs.html; do cp "$f" public/index.html; done
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: public }
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  spec:
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    runs-on: ubuntu-latest
+    permissions: { contents: write, packages: read }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: '${{ github.actor }}', password: '${{ secrets.GITHUB_TOKEN }}' }
+      - name: ZIP specifikace
+        run: |
+          IMAGE=$(sed -nE 's/^IMAGE[[:space:]]*\?=[[:space:]]*(\S+).*/\1/p' Makefile | head -1)
+          docker run --rm -v $GITHUB_WORKSPACE:/work -w /work -u root $IMAGE d2doc spec-zip . --tag "$GITHUB_REF_NAME" --out build
+      - name: GitHub Release
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" build/dist/*.zip --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" build/dist/*.zip --title "Specifikace $GITHUB_REF_NAME" \
+              --notes "Balíček specifikace formátu (FORMAT.yaml, XSD, výběr profilu, vzorky, doplňkové materiály). Změny viz CHANGELOG.adoc."
+          fi
+
+  docs:
+    if: ${{ startsWith(github.ref, 'refs/tags/docs-v') }}
+    runs-on: ubuntu-latest
+    permissions: { contents: write, packages: read }
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: '${{ github.actor }}', password: '${{ secrets.GITHUB_TOKEN }}' }
+      - name: HTML + PDF
+        run: |
+          IMAGE=$(sed -nE 's/^IMAGE[[:space:]]*\?=[[:space:]]*(\S+).*/\1/p' Makefile | head -1)
+          SPEC_REF=$(echo "$GITHUB_REF_NAME" | sed -E 's/^docs-(v[0-9]+\.[0-9]+)\.[0-9]+$/\1/')
+          docker run --rm -v $GITHUB_WORKSPACE:/work -w /work -u root $IMAGE sh -c \
+            "git config --global --add safe.directory /work && d2doc build . --tag $GITHUB_REF_NAME --spec-ref $SPEC_REF --release --out build"
+      - name: GitHub Release
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" build/dist/*.pdf build/dist/*.html --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" build/dist/*.pdf build/dist/*.html --title "Dokumentace $GITHUB_REF_NAME" \
+              --notes "Dokumentace formátu (CZ, EN). Změny textu viz kapitola Historie změn dokumentace."
+          fi
