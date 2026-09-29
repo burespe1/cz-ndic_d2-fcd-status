@@ -1,0 +1,5 @@
+== Elementy formátu
+
+include::{kitdir}/shared/cs/table-legend.adoc[]
+
+include::{gendir}/elements-cs.adoc[]

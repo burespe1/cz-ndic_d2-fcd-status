@@ -1,0 +1,4 @@
+== Concepts
+
+Description of the format concepts: content of the publication, static vs. dynamic part,
+location referencing, record versioning. References: <<EN16157-3>>.

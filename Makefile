@@ -1,0 +1,9 @@
+# Lokální spouštění přes Docker image docs-kitu
+IMAGE ?= ghcr.io/burespe1/ndic-docs-kit:0.4.1
+RUN = docker run --rm -v "$(CURDIR):/work" -w /work $(IMAGE)
+
+.PHONY: check tables docs spec
+check: ; $(RUN) d2doc check .
+tables: ; $(RUN) d2doc tables . --out build
+docs: ; $(RUN) d2doc build . --out build
+spec: ; $(RUN) d2doc spec-zip . --out build

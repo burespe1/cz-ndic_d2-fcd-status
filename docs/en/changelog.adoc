@@ -1,0 +1,5 @@
+== Documentation change history
+
+=== 2.0.0
+
+* first release of the documentation

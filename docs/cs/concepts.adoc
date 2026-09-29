@@ -1,0 +1,258 @@
+== Koncepty
+
+Formát poskytuje stavové informace o dopravě získané z plovoucích vozidel (FCD) na sadě předem
+definovaných úseků silniční sítě (segmentů): dojezdové doby, rychlost dopravního proudu, stav provozu
+a stupně provozu, odhad délky a polohy kolon. Informace se poskytují souhrnně pro všechna vozidla
+a odděleně pro osobní a nákladní automobily.
+
+Formát vychází z DATEX II publikace `ElaboratedDataPublication` <<EN16157-5>>. Stupně provozu podle
+zvyklostí v ČR, kolony a typ vozidla u stavu provozu doplňuje *rozšíření NDIC* (rozšíření úrovně B
+podle <<EN16157-1>>). Oproti verzi 1.1 (DATEX II 2.3) je formát převeden na model DATEX II 3.7; kvalitu dat
+a počet vozidel již nenese rozšíření, ale nativní atributy modelu.
+
+[[obalka]]
+=== Obálka a hlavička publikace
+
+Každá zpráva je dokument DATEX II 3 s kořenovým elementem `d2:payload`. Obálky `d2LogicalModel`
+a `exchange` z verze 2 se již nepoužívají. Atribut `xsi:type` kořenového elementu určuje typ
+publikace (zde `roa:ElaboratedDataPublication`), atribut `modelBaseVersion="3"` verzi modelu a atribut `lang` výchozí jazyk
+textů.
+
+Formát, podle kterého je zpráva sestavena, identifikují výhradně atributy kořenového elementu:
+
+[horizontal]
+`profileName`:: identifikátor formátu bez verze (`cz-ndic_d2-fcd-status`),
+`profileVersion`:: verze formátu (`2.0`).
+`extensionName`, `extensionVersion`:: rozšíření NDIC použité ve zprávě (`cz-ndic_d2-fcd-extension`, `1.0`).
+
+Hlavička publikace obsahuje:
+
+* `feedType` – odkaz na *zdroj dat* (distribuci) v registru národního přístupového bodu <<nap>>,
+  např. `x-source:cz-ndic_d2-fcd-status-v3`. Název distribuce tvoří název formátu, případně obsah distribuce (u VMS `fixed`/`mobile`,
+  u sad poloh `fcd`/`weather`), u snímků (pull) protokol `pull` a celé číslo verze distribuce
+  (`-v1`, `-v2`, …), které se mění nezávisle na verzi formátu a navazuje na řadu distribucí v registru.
+  Verze sítě Global Network není součástí `feedType`; nese ji obsah (verze předdefinovaných poloh).
+  Element neodkazuje na formát; ten určují atributy `profileName` a `profileVersion`. Element
+  `feedDescription` se nepoužívá.
+* `publicationTime` – čas vytvoření obsahu publikace. Pokud se obsah od předchozí publikace nezměnil,
+  zůstává čas původní (stejně jako hlavičky HTTP `Last-Modified` a `ETag`); nový čas vzniká jen se
+  změnou obsahu.
+* `publicationCreator` – poskytovatel publikace: kód země malými písmeny (`cz`) a zkratka
+  poskytovatele (`nationalIdentifier`).
+* `headerInformation` – způsob nakládání s informacemi; NDIC uvádí vždy `confidentiality`
+  = `noRestriction` a `informationStatus` = `real`.
+
+Všechny časové údaje ve zprávě se uvádějí včetně časové zóny.
+
+.Kořenový element a hlavička publikace (vzorek `fcd-all-lorry-car-sample.xml`)
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[lines=2]
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=header,indent=2]
+  ...
+----
+
+[[struktura]]
+=== Struktura publikace
+
+Každá hodnota pro jeden segment a jeden typ vozidla je samostatný element `physicalQuantity` typu
+`roa:SinglePhysicalQuantity`. Ten obsahuje odkaz na polohu segmentu (`pertinentLocation`), volitelně
+identifikátor segmentu u poskytovatele (`source`) a vlastní hodnotu `basicData` jednoho z typů:
+
+[cols="2,4",options="header"]
+|===
+|Typ `basicData` |Obsah
+|`TrafficStatus` |stav provozu (`trafficStatus`) a v rozšíření NDIC typ vozidla, stupeň provozu a kolony
+|`TrafficSpeed` |aktuální průměrná rychlost dopravního proudu (`averageVehicleSpeed`) [km/h]
+|`TravelTimeData` |aktuální dojezdová doba (`travelTime`), dojezdová doba při volném provozu
+(`freeFlowTravelTime`), zpoždění (`travelTimeDelay`) [s] a rychlost volného provozu (`freeFlowSpeed`) [km/h]
+|===
+
+Pro jeden segment a jeden typ vozidla jsou tedy tři elementy `physicalQuantity`. Na segmentech, kde se
+stav vyhodnocuje odděleně podle typu vozidla, je jich až devět (3× `anyVehicle`, 3× `car`, 3× `lorry`),
+podle toho, zda se daný typ vozidel na segmentu v době vyhodnocení vyskytoval. Element `physicalQuantity`
+nemá vlastní identifikátor; jednoznačně jej určuje čas publikace, odkazovaná poloha, typ `basicData`
+a typ vozidla.
+
+[[kategorie]]
+==== Kategorie vozidel
+
+Segmenty se *sdruženým dopravním proudem* (vozidla jedou smíšeně, např. v jednom pruhu) mají jen
+informace pro všechna vozidla (`anyVehicle`). Segmenty s *odděleným dopravním proudem* (více pruhů, kde
+mohou vznikat kolony podle typu vozidel) mají navíc informace pro osobní (`car`) a nákladní (`lorry`)
+automobily. Typ vozidla se uvádí:
+
+* u `TrafficStatus` v rozšíření NDIC (`ndic:vehicleType`),
+* u `TrafficSpeed` v `forVehiclesWithCharacteristicsOf/vehicleType`,
+* u `TravelTimeData` přímo v `vehicleType`.
+
+[[kvalita]]
+==== Kvalita dat a počet vozidel
+
+Každá vypočtená hodnota nese atributy modelu (třída `DataValue`):
+
+* `supplierCalculatedDataQuality` – míra spolehlivosti hodnoty v procentech (0–100, 100 = zcela
+  spolehlivá). Hodnotí se podle stáří a množství použitých údajů z vozidlových sond; vzorec výpočtu
+  není součástí formátu.
+* `numberOfInputValuesUsed` – počet plovoucích vozidel, ze kterých byla hodnota vypočtena. Hodnoty
+  nezávislé na aktuálních vozidlech (statistické `freeFlowSpeed`, `freeFlowTravelTime`) mají hodnotu
+  `9999`.
+
+.Stav provozu pro všechna vozidla (vzorek `fcd-all-lorry-car-sample.xml`)
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=status,indent=0]
+----
+
+[[rychlost]]
+=== Rychlost, dojezdová doba a zpoždění
+
+Aktuální průměrná rychlost v měřeném časovém okně je ve třídě `TrafficSpeed` (`averageVehicleSpeed`),
+rychlost volného průjezdu ve třídě `TravelTimeData` (`freeFlowSpeed`).
+
+.Rychlost dopravního proudu (vzorek `fcd-all-lorry-car-sample.xml`)
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=speed,indent=0]
+----
+
+Třída `TravelTimeData` nese aktuální průměrnou dojezdovou dobu (`travelTime`), průměrnou dojezdovou
+dobu volného průjezdu (`freeFlowTravelTime`) a *aktuální zpoždění* `travelTimeDelay` = `travelTime` −
+`freeFlowTravelTime` (nejméně 0).
+
+.Dojezdová doba a zpoždění (vzorek `fcd-all-lorry-car-sample.xml`)
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=traveltime,indent=0]
+----
+
+[[stav]]
+=== Stav provozu
+
+Stav provozu je hodnota výčtu `TrafficStatusEnum` podle definic modelu 3.7, určená z poměru aktuální
+rychlosti a rychlosti volného provozu:
+
+[cols="1,2,1",options="header"]
+|===
+|Hodnota |Význam |Poměr rychlostí
+|`stationary` |stojící doprava |< 10 %
+|`queuing` |kolony, provoz popojíždí |10–25 %
+|`slow` |zpomalený provoz |25–75 %
+|`freeFlow` |plynulý provoz |≥ 75 %
+|`unknown` |stav není znám |–
+|===
+
+NOTE: Hodnoty verze 2 (`impossible`, `congested`, `heavy`) model 3.7 nepoužívá v tomtéž významu. Není-li
+k dispozici rychlost, převádějí se `impossible` → `stationary`, `congested` → `queuing`, `heavy` → `slow`.
+
+[[stupne]]
+==== Stupně provozu (rozšíření NDIC)
+
+Rozšíření NDIC uvádí stupeň provozu tak, jak se stanovuje a používá v ČR: element
+`ndic:trafficLevel/ndic:trafficLevelValue` s hodnotami `level1` až `level5`. Stupeň se počítá z poměru
+aktuální rychlosti dopravního proudu a rychlosti volného provozu na segmentu:
+
+[cols="1,6,2",options="header"]
+|===
+|Stupeň |Popis |Poměr rychlostí
+|1 |provoz pouze jednotlivých vozidel, jízda je plynulá |85–100 %
+|2 |provoz malých skupinek vozidel, jízda je plynulá, odbavování na křižovatkách bez problémů |75–85 %
+|3 |tvoří se proudy vozidel, provoz je plynulý, avšak rychlost nižší než maximální povolená |50–75 %
+|4 |tvoří se kolony vozidel, provoz není plynulý, průměrná rychlost je výrazně snížená, průjezd křižovatkami je narušen |20–50 %
+|5 |dopravní kolaps – vozidla stojí nebo v kolonách jen velmi pomalu popojíždějí |0–20 %
+|===
+
+[[kolony]]
+==== Kolony (rozšíření NDIC)
+
+Segmenty se interně dělí na menší části – úseky sítě Global Network. Kongesce se vyhodnocuje na úsecích
+jako pokles rychlosti průjezdu úseku *pod 30 % rychlosti volného průjezdu*. Element
+`ndic:queueInformation` obsahuje agregované hodnoty z úseků segmentu, na kterých byla kongesce
+vyhodnocena; nebyla-li vyhodnocena na žádném úseku, element chybí. Na segment je nejvýše jeden.
+
+.Agregace jednotlivých kongescí na segmentu
+image::kongesce.png[Agregace kongescí na segmentu,width=600,align="center"]
+
+* `ndic:queueLength` – součet délek úseků segmentu (i nenavazujících), na kterých byla detekována
+  kongesce [m].
+* `ndic:fromPoint`, `ndic:toPoint` (nepovinné) – začátek a konec kolony jako vzdálenost od počátku
+  segmentu ve směru provozu v procentech délky segmentu (0–100). Kolona začíná (`fromPoint`) v místě,
+  kde do ní vozidla vjíždějí, a končí (`toPoint`) v místě, kde ji opouštějí. Je-li na segmentu více
+  oddělených kongescí, `fromPoint` popisuje začátek první z nich a `toPoint` je dopočten z `queueLength`.
+
+.Poloha kolony na segmentu
+image::queue_position.png[Poloha kolony na segmentu,width=650,align="center"]
+
+.Rozšíření NDIC u stavu provozu (vzorek `fcd-all-lorry-car-sample.xml`)
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=ext,indent=0]
+----
+
+[[rozsireni]]
+==== Struktura rozšíření NDIC
+
+Rozšíření je v samostatném jmenném prostoru `http://ndic.cz/datex2/fcd/extension/1.0` (prefix `ndic`)
+a vkládá se do rozšiřujícího bodu `_trafficStatusExtension` třídy `TrafficStatus`. Schéma rozšíření je
+součástí balíčku specifikace.
+
+.Struktura rozšíření NDIC
+image::NdicFcdExtension.png[Struktura rozšíření NDIC,width=650,align="center"]
+
+[cols="2,1,4",options="header"]
+|===
+|Element |Kard. |Obsah
+|`ndicFcdExtension/vehicleType` |1..1 |typ vozidla, ke kterému se stav vztahuje (`anyVehicle`, `car`, `lorry`)
+|`ndicFcdExtension/trafficLevel/trafficLevelValue` |0..1 |stupeň provozu `level1`–`level5`
+|`ndicFcdExtension/queueInformation/queue` |0..1 / 1..n |kolona na segmentu
+|`queue/queueLength` |1..1 |celková délka kongescí na segmentu [m]
+|`queue/fromPoint` |0..1 |začátek kolony od počátku segmentu [%]
+|`queue/toPoint` |0..1 |konec kolony od počátku segmentu [%]
+|===
+
+[[dostupnost]]
+=== Poskytování jen dostupných dat
+
+Nejsou-li pro segment k dispozici data pro výpočet aktuálního stavu, přenášejí se k němu pouze
+informace při volném provozu (`TravelTimeData` s `freeFlowTravelTime` a `freeFlowSpeed`); elementy
+s aktuální rychlostí, stavem a dojezdovou dobou se vynechají. Segment s aktuálními daty tak pokrývá
+až devět elementů `physicalQuantity`, segment bez nich jen tři (viz vzorek
+`fcd-all-lorry-car-sample-no-data.xml`).
+
+[[platnost]]
+=== Časová platnost a stáří dat
+
+Publikace se aktualizuje periodicky; `periodDefault` je délka periody v sekundách. Hodnota
+`publicationTime` určuje, kdy byla publikace vytvořena, nikoli čas výpočtu. Společný čas výpočtu všech
+hodnot (konec periody měření a výpočtu) je `timeDefault`. Jiné určení platnosti se nepoužívá.
+
+.Perioda a čas výpočtu (vzorek `fcd-all-lorry-car-sample.xml`)
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=timing,indent=0]
+----
+
+Každá hodnota uvádí v `measurementOrCalculationTime/timeValue` čas nejčerstvější vstupní informace
+použité pro její výpočet. Vstupními údaji jsou polohy vozidlových sond, které se v pravidelných
+intervalech přepočítávají na projeté úseky; poslední aktualizace stavu segmentu nastane, když jej opustí
+poslední vozidlo. Rozdíl `timeDefault` a `timeValue` je tedy stáří použitých vstupních dat a určitým
+měřítkem reakční doby systému.
+
+[[polohy]]
+== Popisování poloh
+
+FCD data se počítají pro předem definované segmenty silniční sítě. Segment může být dán dvěma po sobě
+jdoucími body lokační tabulky ALERT-C <<ISO14819-3>>, úseky sítě Global Network či fyzickým uspořádáním komunikace.
+
+Formát popisuje polohy výhradně odkazem v elementu `pertinentLocation` (typ `loc:LocationByReference`,
+`targetClass` = `loc:PredefinedLocation`) do sady předem definovaných poloh publikované formátem
+`cz-ndic_d2-pls`, související s tímto zdrojem. Odběratel polohu dohledá podle identifikátoru a verze.
+
+Vedle odkazu může poskytovatel nepovinně uvést vlastní identifikátor segmentu v elementu `source`
+(`sourceIdentification`). Je-li shodný s identifikátorem v odkazu na polohu, neuvádí se.
+
+.Odkaz na polohu segmentu (vzorek `fcd-all-lorry-car-sample.xml`)
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=loc-ref,indent=0]
+----

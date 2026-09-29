@@ -1,0 +1,4 @@
+== Examples
+
+// Sample excerpts via tags – in the sample: <!-- tag::location[] --> … <!-- end::location[] -->
+Samples are part of the specification package `{schema-uri}.zip`.

@@ -1,0 +1,15 @@
+# Ruční texty k tabulkám elementů – jediný ručně psaný vstup tabulek.
+# Klíč = název třídy ve schématu (např. SituationRecord), pod ním element:
+#
+# SituationRecord:
+#   _: Úvodní věta tabulky (nepovinné).
+#   probabilityOfOccurrence:
+#     note: Popis z pohledu NDIC.
+#     card: "1..1"      # pravidlo NDIC nad rámec schématu (tmavě modře)
+#     required: true    # NDIC vždy vyplňuje
+#     values:           # překlad/upřesnění hodnot výčtu jen pro tento element
+#       certain: jistě nastalo
+#
+# _enum:                # překlady hodnot výčtů pro celý formát (přepisují sdílený slovník kitu)
+#   ProbabilityEnum.certain: jistá
+{}

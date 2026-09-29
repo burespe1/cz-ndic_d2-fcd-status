@@ -1,0 +1,25 @@
+:lang-cs:
+include::{gendir}/attributes-cs.adoc[]
+include::{kitdir}/settings.adoc[]
+= {x-title}: {format-name}
+
+include::{kitdir}/shared/cs/document-info.adoc[]
+
+== Úvod
+
+include::{kitdir}/shared/cs/introduction.adoc[]
+
+include::concepts.adoc[]
+
+include::elements.adoc[]
+
+[appendix]
+include::examples.adoc[]
+
+[appendix]
+include::changelog.adoc[]
+
+[appendix]
+== Odkazy
+
+include::{kitdir}/shared/cs/references.adoc[]

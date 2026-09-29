@@ -1,0 +1,6 @@
+== Historie změn dokumentace
+
+// Revize dokumentace (MAJOR.MINOR.REVIZE). Změny formátu viz CHANGELOG.adoc ve specifikaci.
+=== 2.0.0
+
+* Nová dokumentace formátu `cz-ndic_d2-fcd-status` verze 2.0 (DATEX II 3.7); nahrazuje dokumentaci formátu cz-ndic_d2-fcd-v1.1 (DATEX II 2.3).

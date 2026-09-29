@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<d2:payload xmlns:d2="http://datex2.eu/schema/3/d2Payload" xmlns:com="http://datex2.eu/schema/3/common" xmlns:loc="http://datex2.eu/schema/3/locationReferencing" xmlns:roa="http://datex2.eu/schema/3/roadTrafficData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roa:ElaboratedDataPublication" lang="cs" modelBaseVersion="3" profileName="cz-ndic_d2-fcd-status" profileVersion="2.0" extensionName="cz-ndic_d2-fcd-extension" extensionVersion="1.0">
+  <com:feedType>x-source:cz-ndic_d2-fcd-status-v3</com:feedType>
+  <com:publicationTime>2022-12-18T00:00:06+01:00</com:publicationTime>
+  <com:publicationCreator>
+    <com:country>cz</com:country>
+    <com:nationalIdentifier>ŘSD</com:nationalIdentifier>
+  </com:publicationCreator>
+  <roa:periodDefault>300</roa:periodDefault>
+  <roa:timeDefault>2022-12-17T23:59:35+01:00</roa:timeDefault>
+  <roa:headerInformation>
+    <com:confidentiality>noRestriction</com:confidentiality>
+    <com:informationStatus>real</com:informationStatus>
+  </roa:headerInformation>
+  <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
+    <roa:pertinentLocation xsi:type="loc:LocationByReference">
+      <loc:predefinedLocationReference id="6D476A44-AA44-4947-AA4B-7C4DD79BB67E" version="0" targetClass="loc:PredefinedLocation"/>
+    </roa:pertinentLocation>
+    <roa:basicData xsi:type="roa:TravelTimeData">
+      <roa:measurementOrCalculationTime>
+        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+      </roa:measurementOrCalculationTime>
+      <roa:vehicleType>anyVehicle</roa:vehicleType>
+      <roa:freeFlowTravelTime numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="100">
+        <roa:duration>259</roa:duration>
+      </roa:freeFlowTravelTime>
+      <roa:freeFlowSpeed numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="80">
+        <com:speed>50</com:speed>
+      </roa:freeFlowSpeed>
+    </roa:basicData>
+  </roa:physicalQuantity>
+  <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
+    <roa:pertinentLocation xsi:type="loc:LocationByReference">
+      <loc:predefinedLocationReference id="6D476A44-AA44-4947-AA4B-7C4DD79BB67E" version="0" targetClass="loc:PredefinedLocation"/>
+    </roa:pertinentLocation>
+    <roa:basicData xsi:type="roa:TravelTimeData">
+      <roa:measurementOrCalculationTime>
+        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+      </roa:measurementOrCalculationTime>
+      <roa:vehicleType>car</roa:vehicleType>
+      <roa:freeFlowTravelTime numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="100">
+        <roa:duration>259</roa:duration>
+      </roa:freeFlowTravelTime>
+      <roa:freeFlowSpeed numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="80">
+        <com:speed>55</com:speed>
+      </roa:freeFlowSpeed>
+    </roa:basicData>
+  </roa:physicalQuantity>
+  <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
+    <roa:pertinentLocation xsi:type="loc:LocationByReference">
+      <loc:predefinedLocationReference id="6D476A44-AA44-4947-AA4B-7C4DD79BB67E" version="0" targetClass="loc:PredefinedLocation"/>
+    </roa:pertinentLocation>
+    <roa:basicData xsi:type="roa:TravelTimeData">
+      <roa:measurementOrCalculationTime>
+        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+      </roa:measurementOrCalculationTime>
+      <roa:vehicleType>lorry</roa:vehicleType>
+      <roa:freeFlowTravelTime numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="100">
+        <roa:duration>279</roa:duration>
+      </roa:freeFlowTravelTime>
+      <roa:freeFlowSpeed numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="80">
+        <com:speed>50</com:speed>
+      </roa:freeFlowSpeed>
+    </roa:basicData>
+  </roa:physicalQuantity>
+</d2:payload>

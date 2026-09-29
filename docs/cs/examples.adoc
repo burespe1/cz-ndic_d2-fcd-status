@@ -1,0 +1,47 @@
+== Příklady zpráv
+
+Vzorky jsou součástí balíčku specifikace `{schema-uri}.zip` (adresář `samples`). Všechny jsou validní vůči
+schématu DATEX II 3.7 a odpovídají výběru profilu (`.sel`).
+
+=== fcd-all-lorry-car-sample.xml – segment s odděleným dopravním proudem
+
+Publikace obsahuje informace pro jeden segment s odděleným dopravním proudem: devět elementů
+`physicalQuantity` – stav provozu, rychlost a dojezdovou dobu, vždy pro všechna vozidla, osobní
+a nákladní automobily.
+
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tags=**]
+----
+
+Obálka a hlavička::
+Kořen `d2:payload` typu `roa:ElaboratedDataPublication` s atributy `profileName`, `profileVersion`
+a identifikací rozšíření `extensionName`, `extensionVersion`; odkaz na zdroj dat `feedType`
+(`x-source:cz-ndic_d2-fcd-status-v3`); perioda publikace 300 s (`periodDefault`),
+čas výpočtu `timeDefault`.
+
+Stav provozu::
+Pro všechna vozidla je rychlost 38 km/h při rychlosti volného provozu 50 km/h (76 %), stav je tedy
+`freeFlow`; pro nákladní automobily 18 km/h z 50 km/h (36 %), stav `slow`. Rozšíření NDIC uvádí stupeň
+provozu podle poměru rychlostí – `level2` pro všechna vozidla (76 %), `level1` pro osobní (58 z 55 km/h)
+a `level4` pro nákladní automobily (36 %) – a kolonu dlouhou 148 m od 40 % do 90 % délky segmentu.
+
+Dojezdová doba::
+Pro všechna vozidla 549 s oproti 259 s při volném provozu, zpoždění `travelTimeDelay` tedy 290 s.
+
+Kvalita a počet vozidel::
+Atributy `supplierCalculatedDataQuality` (v procentech) a `numberOfInputValuesUsed` (počet plovoucích
+vozidel, `9999` u statistických hodnot) u každé hodnoty.
+
+Poloha::
+Všechny hodnoty odkazují na předdefinovanou polohu `6D476A44-AA44-4947-AA4B-7C4DD79BB67E` verze 0.
+
+=== fcd-all-lorry-car-sample-no-data.xml – segment bez aktuálních dat
+
+Pro tentýž segment nejsou k dispozici aktuální data: publikace obsahuje jen tři elementy
+`physicalQuantity` typu `TravelTimeData` s dojezdovou dobou a rychlostí při volném provozu.
+
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample-no-data.xml[tags=**]
+----

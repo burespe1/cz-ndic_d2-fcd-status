@@ -1,0 +1,25 @@
+:lang-en:
+include::{gendir}/attributes-en.adoc[]
+include::{kitdir}/settings.adoc[]
+= {x-title}: {format-name}
+
+include::{kitdir}/shared/en/document-info.adoc[]
+
+== Introduction
+
+include::{kitdir}/shared/en/introduction.adoc[]
+
+include::concepts.adoc[]
+
+include::elements.adoc[]
+
+[appendix]
+include::examples.adoc[]
+
+[appendix]
+include::changelog.adoc[]
+
+[appendix]
+== References
+
+include::{kitdir}/shared/en/references.adoc[]

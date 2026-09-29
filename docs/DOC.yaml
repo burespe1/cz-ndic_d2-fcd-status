@@ -1,0 +1,15 @@
+# Metadata dokumentace. Verze dokumentace = <format_version>.<revision>
+format_version: '2.0'
+revision: 0
+date: '2026-09-28'
+languages:
+- cs
+- en
+cs:
+  perex: Dojezdové doby, rychlosti, stav provozu, stupně provozu a kolony z plovoucích
+    vozidel na předdefinovaných segmentech.
+  keywords: DATEX II, NDIC, ElaboratedDataPublication
+en:
+  perex: Travel times, speeds, traffic status, levels and queues from floating car
+    data on predefined segments.
+  keywords: DATEX II, NDIC, ElaboratedDataPublication

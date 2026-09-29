@@ -1,0 +1,33 @@
+= cz-ndic_d2-fcd-status
+:toc: macro
+
+DATEX II Elaborated Data Publication – FCD dopravní data. Dojezdové doby, rychlosti, stav provozu, stupně provozu a kolony z plovoucích vozidel na předdefinovaných segmentech.
+
+Repozitář formátu Národního dopravního informačního centra (NDIC) – specifikace datového profilu
+DATEX II 3.7 a jeho dokumentace. Aktuální verze formátu: *2.0*.
+
+toc::[]
+
+== Obsah
+
+[horizontal]
+`FORMAT.yaml`:: metadata formátu (verze MAJOR.MINOR, distribuce)
+`schema/`:: závazné XML schéma (XSD)
+`sel/`:: výběr profilu z modelu DATEX II (webtool DATEX II)
+`samples/`:: vzorky dat, validní vůči schématu
+`CHANGELOG.adoc`:: změny formátu
+`docs/`:: zdrojové texty dokumentace (AsciiDoc)
+
+== Vydání
+
+Vydání jsou v sekci *Releases* tohoto repozitáře:
+
+[cols="1,3"]
+|===
+|tag |obsah
+
+|`vX.Y` |balíček specifikace `cz-ndic_d2-fcd-status-vX.Y.zip` (FORMAT.yaml, schéma, výběr profilu, vzorky, doplňkové materiály, CHANGELOG)
+|`docs-vX.Y.N` |dokumentace formátu (PDF, HTML); `X.Y` = verze formátu, `N` = revize textu dokumentace
+|===
+
+Registr zdrojů dat a distribucí: https://registr.dopravniinfo.cz/[Národní přístupový bod].
