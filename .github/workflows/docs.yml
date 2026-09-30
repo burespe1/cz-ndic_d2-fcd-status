@@ -3,7 +3,7 @@
 #   tag vX.Y           -> ZIP specifikace + GitHub Release
 #   tag docs-vX.Y.N    -> HTML + PDF ze specifikace vX.Y + GitHub Release
 # Image docs-kitu se bere z Makefile (IMAGE ?= ...). Image je privátní: v nastavení balíčku
-# ghcr.io/burespe1/ndic-docs-kit → Manage Actions access musí mít tento repozitář právo Read.
+# ghcr.io/tamtamresearch-d2v3/ndic-docs-kit → Manage Actions access musí mít tento repozitář právo Read.
 name: docs
 on:
   push:
