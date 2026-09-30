@@ -25,15 +25,11 @@ Formát, podle kterého je zpráva sestavena, identifikují výhradně atributy 
 
 Hlavička publikace obsahuje:
 
-* `feedType` – odkaz na *zdroj dat* (distribuci) v registru národního přístupového bodu <<nap>>,
-  např. `x-source:cz-ndic_d2-fcd-status-v3`. Název distribuce tvoří název formátu, případně obsah distribuce (u VMS `fixed`/`mobile`,
-  u sad poloh `fcd`/`weather`), u snímků (pull) protokol `pull` a celé číslo verze distribuce
-  (`-v1`, `-v2`, …), které se mění nezávisle na verzi formátu a navazuje na řadu distribucí v registru.
-  Verze sítě Global Network není součástí `feedType`; nese ji obsah (verze předdefinovaných poloh).
-  Element neodkazuje na formát; ten určují atributy `profileName` a `profileVersion`. Element
-  `feedDescription` se nepoužívá.
+* `feedType` – identifikátor zdroje dat (distribuce) v registru národního přístupového bodu <<nap>>.
+  Zdroj odkazuje na formát, ve kterém data poskytuje; formát zprávy určují atributy `profileName`
+  a `profileVersion`. Element `feedDescription` se nepoužívá.
 * `publicationTime` – čas vytvoření obsahu publikace. Pokud se obsah od předchozí publikace nezměnil,
-  zůstává čas původní (stejně jako hlavičky HTTP `Last-Modified` a `ETag`); nový čas vzniká jen se
+  zůstává čas původní; nový čas vzniká jen se
   změnou obsahu.
 * `publicationCreator` – poskytovatel publikace: kód země malými písmeny (`cz`) a zkratka
   poskytovatele (`nationalIdentifier`).

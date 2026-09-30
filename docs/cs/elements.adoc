@@ -1,4 +1,4 @@
-== Elementy formátu
+== Struktura XML
 
 include::{kitdir}/shared/cs/table-legend.adoc[]
 

@@ -24,11 +24,6 @@ samples: samples
 ndic:
   action: upgrade
   previous: cz-ndic_d2-fcd-v1.1 (DATEX II 2.3)
-  source: dodavatel FCD
-  distributions:
-  - x-source:cz-ndic_d2-fcd-status-v3 (push, snímek)
-  legislation:
-  - RTTI
   profiles:
   - RSP Traffic Condition and Travel Time
   profileName: cz-ndic_d2-fcd-status

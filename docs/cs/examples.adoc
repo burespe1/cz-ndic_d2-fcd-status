@@ -1,7 +1,6 @@
 == Příklady zpráv
 
-Vzorky jsou součástí balíčku specifikace `{schema-uri}.zip` (adresář `samples`). Všechny jsou validní vůči
-schématu DATEX II 3.7 a odpovídají výběru profilu (`.sel`).
+Vzorky jsou součástí balíčku specifikace `{schema-uri}.zip` (adresář `samples`).
 
 === fcd-all-lorry-car-sample.xml – segment s odděleným dopravním proudem
 
@@ -16,8 +15,7 @@ include::{samplesdir}/fcd-all-lorry-car-sample.xml[tags=**]
 
 Obálka a hlavička::
 Kořen `d2:payload` typu `roa:ElaboratedDataPublication` s atributy `profileName`, `profileVersion`
-a identifikací rozšíření `extensionName`, `extensionVersion`; odkaz na zdroj dat `feedType`
-(`x-source:cz-ndic_d2-fcd-status-v3`); perioda publikace 300 s (`periodDefault`),
+a identifikací rozšíření `extensionName`, `extensionVersion`, `feedType` odkazuje na zdroj dat; perioda publikace 300 s (`periodDefault`),
 čas výpočtu `timeDefault`.
 
 Stav provozu::

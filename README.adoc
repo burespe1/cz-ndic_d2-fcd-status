@@ -11,7 +11,7 @@ toc::[]
 == Obsah
 
 [horizontal]
-`FORMAT.yaml`:: metadata formátu (verze MAJOR.MINOR, distribuce)
+`FORMAT.yaml`:: metadata formátu (verze MAJOR.MINOR)
 `schema/`:: závazné XML schéma (XSD)
 `sel/`:: výběr profilu z modelu DATEX II (webtool DATEX II)
 `samples/`:: vzorky dat, validní vůči schématu

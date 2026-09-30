@@ -1,4 +1,4 @@
-== Format elements
+== XML structure
 
 include::{kitdir}/shared/en/table-legend.adoc[]
 
