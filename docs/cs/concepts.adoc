@@ -7,14 +7,12 @@ a odděleně pro osobní a nákladní automobily.
 
 Formát vychází z DATEX II publikace `ElaboratedDataPublication` <<EN16157-5>>. Stupně provozu podle
 zvyklostí v ČR, kolony a typ vozidla u stavu provozu doplňuje *rozšíření NDIC* (rozšíření úrovně B
-podle <<EN16157-1>>). Oproti verzi 1.1 (DATEX II 2.3) je formát převeden na model DATEX II 3.7; kvalitu dat
-a počet vozidel již nenese rozšíření, ale nativní atributy modelu.
+podle <<EN16157-1>>). Používá model DATEX II 3.7; kvalitu dat a počet vozidel nesou nativní atributy modelu.
 
 [[obalka]]
 === Obálka a hlavička publikace
 
-Každá zpráva je dokument DATEX II 3 s kořenovým elementem `d2:payload`. Obálky `d2LogicalModel`
-a `exchange` z verze 2 se již nepoužívají. Atribut `xsi:type` kořenového elementu určuje typ
+Každá zpráva je dokument DATEX II 3 s kořenovým elementem `d2:payload`. Atribut `xsi:type` kořenového elementu určuje typ
 publikace (zde `roa:ElaboratedDataPublication`), atribut `modelBaseVersion="3"` verzi modelu a atribut `lang` výchozí jazyk
 textů.
 
@@ -141,9 +139,6 @@ rychlosti a rychlosti volného provozu:
 |`freeFlow` |plynulý provoz |≥ 75 %
 |`unknown` |stav není znám |–
 |===
-
-NOTE: Hodnoty verze 2 (`impossible`, `congested`, `heavy`) model 3.7 nepoužívá v tomtéž významu. Není-li
-k dispozici rychlost, převádějí se `impossible` → `stationary`, `congested` → `queuing`, `heavy` → `slow`.
 
 [[stupne]]
 ==== Stupně provozu (rozšíření NDIC)

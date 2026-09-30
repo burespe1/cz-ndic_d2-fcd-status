@@ -3,4 +3,12 @@
 // Revize dokumentace (MAJOR.MINOR.REVIZE). Změny formátu viz CHANGELOG.adoc ve specifikaci.
 === 2.0.0
 
-* Nová dokumentace formátu `cz-ndic_d2-fcd-status` verze 2.0 (DATEX II 3.7); nahrazuje dokumentaci formátu cz-ndic_d2-fcd-v1.1 (DATEX II 2.3).
+* Nová dokumentace formátu `cz-ndic_d2-fcd-status` verze 2.0 (DATEX II 3.7); nahrazuje dokumentaci formátu
+  cz-ndic_d2-fcd-v1.1 (DATEX II 2.3).
+* Změny oproti verzi 1.1 (DATEX II 2.3):
+** Formát je převeden na model DATEX II 3.7. Obálky `d2LogicalModel` a `exchange`
+   se nepoužívají; kořen je `d2:payload`, formát určují atributy `profileName` a `profileVersion`.
+** Kvalitu dat a počet vozidel nenese rozšíření NDIC, ale nativní atributy modelu.
+** Hodnoty stavu provozu verze 2 (`impossible`, `congested`, `heavy`) model 3.7 nepoužívá v tomtéž významu.
+   Není-li k dispozici rychlost, převádějí se `impossible` → `stationary`, `congested` → `queuing`,
+   `heavy` → `slow`.
