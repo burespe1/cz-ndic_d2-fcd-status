@@ -15,8 +15,8 @@ include::{samplesdir}/fcd-all-lorry-car-sample.xml[tags=**]
 ----
 
 Obálka a hlavička::
-Kořen `d2:payload` typu `roa:ElaboratedDataPublication` s atributy `profileName`, `profileVersion`
-a identifikací rozšíření `extensionName`, `extensionVersion`, `feedType` odkazuje na zdroj dat; perioda publikace 300 s (`periodDefault`),
+Kořen `d2:payload` typu `roa:ElaboratedDataPublication` s atributy `@profileName`, `@profileVersion`
+a identifikací rozšíření `@extensionName`, `@extensionVersion`, `feedType` odkazuje na zdroj dat; perioda publikace 300 s (`periodDefault`),
 čas výpočtu `timeDefault`.
 
 Stav provozu::
@@ -28,7 +28,7 @@ Dojezdová doba::
 Pro všechna vozidla 87 s oproti 74 s při volném provozu, zpoždění `travelTimeDelay` tedy 13 s.
 
 Kvalita a počet vozidel::
-Hodnoty pro všechna vozidla mají `supplierCalculatedDataQuality` (95 %) a `numberOfInputValuesUsed`
+Hodnoty pro všechna vozidla mají `@supplierCalculatedDataQuality` (95 %) a `@numberOfInputValuesUsed`
 (10 vozidel), rychlosti osobních a nákladních automobilů jen počet vozidel (3 a 7); hodnoty při volném
 provozu atributy kvality nemají.
 

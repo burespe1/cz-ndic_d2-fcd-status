@@ -6,7 +6,7 @@ and an estimate of the length and position of queues. Speeds are provided for al
 separately for cars and lorries; travel times, traffic status, level of traffic and queues for all vehicles
 only.
 
-The format is based on the DATEX II `ElaboratedDataPublication` <<EN16157-5>>. Levels of traffic as used
+The format is based on the DATEX II `roa:ElaboratedDataPublication` <<EN16157-5>>. Levels of traffic as used
 in the Czech Republic and queues are added by the *NDIC extension* (level B extension according to
 <<EN16157-1>>). It uses the DATEX II 3.7 model; data quality and the number of vehicles are carried by
 native attributes of the model.
@@ -16,25 +16,29 @@ native attributes of the model.
 
 Each message is a DATEX II 3 document with the root element `d2:payload`. The `xsi:type` attribute of the
 root element determines the publication type (here `roa:ElaboratedDataPublication`), the attribute
-`modelBaseVersion="3"` the model version and the attribute `lang` the default language of texts.
+`modelBaseVersion="3"` the model version and the attribute `@lang` the default language of texts.
 
 The format according to which the message is built is identified solely by attributes of the root element:
 
 [horizontal]
-`profileName`:: format identifier without version (`cz-ndic_d2-fcd-status`),
-`profileVersion`:: format version (`2.0`).
-`extensionName`, `extensionVersion`:: NDIC extension used in the message (`cz-ndic_d2-fcd-extension`, `1.0`).
+`@profileName`:: format identifier without version (`cz-ndic_d2-fcd-status`),
+`@profileVersion`:: format version (`2.0`).
+`@extensionName`, `@extensionVersion`:: NDIC extension used in the message (`cz-ndic_d2-fcd-extension`, `1.0`).
 
 The publication header contains:
 
-* `feedType` – identifier of the data source the message comes from. The format of the message is
-  identified by the `profileName` and `profileVersion` attributes, not by `feedType`. The `feedDescription` element is not used.
-* `publicationTime` – time the publication content was created. If the content has not changed since the
+* `feedType` – identifier of the data source the message comes from:
+** the format of the message is identified by the `@profileName` and `@profileVersion` attributes, not by
+   `feedType`,
+** the `feedDescription` element is not used.
+* `publicationTime` – time the publication content was created; if the content has not changed since the
   previous publication, the original time is kept; a new time is set only when the content changes.
-* `publicationCreator` – publisher: country code in lower case (`cz`) and the publisher's abbreviation
-  (`nationalIdentifier`).
-* `headerInformation` – handling of the information; NDIC always states `confidentiality`
-  = `noRestriction` and `informationStatus` = `real`.
+* `publicationCreator` – publisher:
+** country code in lower case (`cz`),
+** the publisher's abbreviation (`nationalIdentifier`).
+* `headerInformation` – handling of the information; NDIC always states:
+** `confidentiality` = `noRestriction`,
+** `informationStatus` = `real`.
 
 All time values in the message include the time zone.
 
@@ -56,15 +60,15 @@ the value itself, `basicData`, of one of the types:
 [cols="2,4",options="header"]
 |===
 |`basicData` type |Content
-|`TrafficStatus` |traffic status (`trafficStatus`) and, in the NDIC extension, level of traffic and queues – for all vehicles only
-|`TrafficSpeed` |current average speed of the traffic flow (`averageVehicleSpeed`) [km/h]
-|`TravelTimeData` |current travel time (`travelTime`), free-flow travel time (`freeFlowTravelTime`),
+|`roa:TrafficStatus` |traffic status (`trafficStatus`) and, in the NDIC extension, level of traffic and queues – for all vehicles only
+|`roa:TrafficSpeed` |current average speed of the traffic flow (`averageVehicleSpeed`) [km/h]
+|`roa:TravelTimeData` |current travel time (`travelTime`), free-flow travel time (`freeFlowTravelTime`),
 delay (`travelTimeDelay`) [s] and free-flow speed (`freeFlowSpeed`) [km/h]
 |===
 
 A segment with a mixed traffic flow therefore has three `physicalQuantity` elements. Segments where speed
 and travel time are evaluated separately by vehicle type have up to seven (traffic status for all vehicles,
-speed and `TravelTimeData` for `anyVehicle`, `car` and `lorry`), depending on whether vehicles of the given type
+speed and `roa:TravelTimeData` for `anyVehicle`, `car` and `lorry`), depending on whether vehicles of the given type
 were present on the segment during the evaluation. The element `physicalQuantity` has no identifier of its
 own; it is uniquely determined by the publication time, the referenced location, the `basicData` type and
 the vehicle type.
@@ -72,28 +76,36 @@ the vehicle type.
 [[kategorie]]
 ==== Vehicle categories
 
-Segments with a *mixed traffic flow* (vehicles travel together, e.g. in one lane) carry information for all
-vehicles only (`anyVehicle`). Segments with a *separated traffic flow* (several lanes where speeds of cars
-and lorries differ) additionally carry the current speed (`TrafficSpeed`) and the free-flow speed
-(`TravelTimeData` with `freeFlowSpeed` only) for cars (`car`) and lorries (`lorry`). Travel time, free-flow
-travel time and delay are given for all vehicles only, as are traffic status, level of traffic and queues
-(`TrafficStatus` states no vehicle type). The vehicle type is given:
+Scope of information by segment:
 
-* in `TrafficSpeed` in `forVehiclesWithCharacteristicsOf/vehicleType`,
-* in `TravelTimeData` directly in `vehicleType`.
+* Segments with a *mixed traffic flow* (vehicles travel together, e.g. in one lane) carry information for
+  all vehicles only (`anyVehicle`).
+* Segments with a *separated traffic flow* (several lanes where speeds of cars and lorries differ)
+  additionally carry for cars (`car`) and lorries (`lorry`):
+** the current speed (`roa:TrafficSpeed`),
+** the free-flow speed (`roa:TravelTimeData` with `freeFlowSpeed` only).
+* For all vehicles only:
+** travel time, free-flow travel time and delay,
+** traffic status, level of traffic and queues (`roa:TrafficStatus` states no vehicle type).
+
+The vehicle type is given:
+
+* in `roa:TrafficSpeed` in `forVehiclesWithCharacteristicsOf/vehicleType`,
+* in `roa:TravelTimeData` directly in `vehicleType`.
 
 [[kvalita]]
 ==== Data quality and number of vehicles
 
-Calculated values carry attributes of the model (class `DataValue`):
+Calculated values carry attributes of the model (class `com:DataValue`):
 
-* `supplierCalculatedDataQuality` – reliability of the value in per cent (0–100, 100 = fully reliable).
-  It is assessed from the age and amount of the probe vehicle data used; the formula is not part of the
-  format.
-* `numberOfInputValuesUsed` – number of floating vehicles the value was calculated from.
+* `@supplierCalculatedDataQuality` – reliability of the value in per cent:
+** 0–100, 100 = fully reliable,
+** assessed from the age and amount of the probe vehicle data used,
+** the formula is not part of the format.
+* `@numberOfInputValuesUsed` – number of floating vehicles the value was calculated from.
 
 Values for all vehicles (`trafficStatus`, `averageVehicleSpeed`, `travelTime`) carry both attributes, speeds
-of cars and lorries only `numberOfInputValuesUsed`. Values not depending on current vehicles (statistical
+of cars and lorries only `@numberOfInputValuesUsed`. Values not depending on current vehicles (statistical
 `freeFlowSpeed`, `freeFlowTravelTime`) carry no quality attributes.
 
 .Traffic status for all vehicles (sample `fcd-all-lorry-car-sample.xml`)
@@ -105,8 +117,8 @@ include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=status,indent=0]
 [[rychlost]]
 === Speed, travel time and delay
 
-The current average speed in the measurement time window is in the class `TrafficSpeed`
-(`averageVehicleSpeed`), the free-flow speed in the class `TravelTimeData` (`freeFlowSpeed`).
+The current average speed in the measurement time window is in the class `roa:TrafficSpeed`
+(`averageVehicleSpeed`), the free-flow speed in the class `roa:TravelTimeData` (`freeFlowSpeed`).
 
 .Traffic speed (sample `fcd-all-lorry-car-sample.xml`)
 [source,xml]
@@ -114,7 +126,7 @@ The current average speed in the measurement time window is in the class `Traffi
 include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=speed,indent=0]
 ----
 
-The class `TravelTimeData` carries the current average travel time (`travelTime`), the average free-flow
+The class `roa:TravelTimeData` carries the current average travel time (`travelTime`), the average free-flow
 travel time (`freeFlowTravelTime`) and the *current delay* `travelTimeDelay` = `travelTime` −
 `freeFlowTravelTime` (at least 0).
 
@@ -127,7 +139,7 @@ include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=traveltime,indent=0]
 [[stav]]
 === Traffic status
 
-The traffic status is a value of the enumeration `TrafficStatusEnum` according to the definitions of the
+The traffic status is a value of the enumeration `roa:TrafficStatusEnum` according to the definitions of the
 3.7 model, determined from the ratio of the current speed to the free-flow speed:
 
 [cols="1,2,1",options="header"]
@@ -144,7 +156,7 @@ The traffic status is a value of the enumeration `TrafficStatusEnum` according t
 ==== Levels of traffic (NDIC extension)
 
 The NDIC extension states the level of traffic as determined and used in the Czech Republic: the element
-`ndic:trafficLevel/ndic:trafficLevelValue` with the values `level1` to `level5`. The level is calculated
+`trafficLevel/trafficLevelValue` with the values `level1` to `level5`. The level is calculated
 from the ratio of the current speed of the traffic flow to the free-flow speed on the segment:
 
 [cols="1,6,2",options="header"]
@@ -162,19 +174,21 @@ from the ratio of the current speed of the traffic flow to the free-flow speed o
 
 Segments are internally divided into smaller parts – sections of the Global Network. Congestion is
 evaluated on the sections as a drop of the travel speed on the section *below 30 % of the free-flow speed*.
-The element `ndic:queueInformation` contains values aggregated from the sections of the segment where
+The element `queueInformation` contains values aggregated from the sections of the segment where
 congestion was detected; if none was detected, the element is absent. There is at most one per segment.
 
 .Aggregation of individual congestions on a segment
 image::kongesce-en.svg[Aggregation of congestion on a segment,width=680,align="center"]
 
-* `ndic:queueLength` – sum of the lengths of the sections of the segment (also non-adjacent) where
+* `queue/queueLength` – sum of the lengths of the sections of the segment (also non-adjacent) where
   congestion was detected [m].
-* `ndic:fromPoint`, `ndic:toPoint` (optional) – start and end of the queue as the distance from the start
+* `queue/fromPoint`, `queue/toPoint` (optional) – start and end of the queue as the distance from the start
   of the segment in the direction of travel, in per cent of the segment length (0–100, at most two decimal
-  places). The queue starts (`fromPoint`) where vehicles enter it and ends (`toPoint`) where they leave it.
-  If there are several separate congestions on the segment, `fromPoint` gives the start of the first one
-  and `toPoint` is derived from `queueLength`.
+  places):
+** the queue starts (`fromPoint`) where vehicles enter it,
+** it ends (`toPoint`) where they leave it,
+** if there are several separate congestions on the segment, `fromPoint` gives the start of the first one
+   and `toPoint` is derived from `queueLength`.
 
 .Position of a queue on the segment
 image::poloha-kolony-en.svg[Position of a queue on the segment,width=680,align="center"]
@@ -189,7 +203,7 @@ include::{samplesdir}/fcd-congestion.xml[tag=status,indent=0]
 ==== Structure of the NDIC extension
 
 The extension is in a separate namespace `http://ndic.cz/datex2/fcd/extension/1.0` (prefix `ndic`) and is
-inserted into the extension point `_trafficStatusExtension` of the class `TrafficStatus`; it applies to all
+inserted into the extension point `_trafficStatusExtension` of the class `roa:TrafficStatus`; it applies to all
 vehicles. The extension schema `cz-ndic_d2-fcd-extension-1.0.xsd` is part of the specification package
 (directory `schema`) and messages are validated against it as well.
 
@@ -241,17 +255,23 @@ consecutive points of the ALERT-C location table <<ISO14819-3>>, by sections of 
 the physical layout of the road.
 
 The format references locations solely in the element `pertinentLocation` (type `loc:LocationByReference`,
-`targetClass` = `loc:PredefinedLocation`) to the set of predefined locations published in the format
+`@targetClass` = `loc:PredefinedLocation`) to the set of predefined locations published in the format
 `cz-ndic_d2-pls` (set of FCD segments). The recipient looks the location up by its identifier and version.
 
-Segments of the FCD set are sections between two consecutive locations of the Czech ALERT-C location
-table (table 25); each direction of travel is a separate segment. The segment identifier is composed of
-these locations in the form `TS<from>T<to>`, where `<from>` and `<to>` are location codes padded with
-zeros to five digits: `TS02125T15781` is the segment from location 2125 to location 15781, the opposite
-direction is `TS15781T02125`. The location version corresponds to the network release from which the
-location set is derived (`260601` for network 26.06). A recipient with the location table can thus
-identify the segment even without the location set; the full description (ALERT-C with direction,
-OpenLR, Global Network sections and the location course) is in the location set.
+Segments of the FCD set:
+
+* are sections between two consecutive locations of the Czech ALERT-C location table (table 25); each
+  direction of travel is a separate segment,
+* the segment identifier is composed of these locations in the form `TS<from>T<to>`, where `<from>` and
+  `<to>` are location codes padded with zeros to five digits:
+** `TS02125T15781` is the segment from location 2125 to location 15781,
+** the opposite direction is `TS15781T02125`,
+* the location version corresponds to the network release from which the location set is derived
+  (`260601` for network 26.06).
+
+A recipient with the location table can thus identify the segment even without the location set; the full
+description (ALERT-C with direction, OpenLR, Global Network sections and the location path) is in the
+location set.
 
 .Reference to the segment location (sample `fcd-all-lorry-car-sample.xml`)
 [source,xml]

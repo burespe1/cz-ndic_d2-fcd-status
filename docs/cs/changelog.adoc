@@ -7,7 +7,7 @@
   cz-ndic_d2-fcd-v1.1 (DATEX II 2.3).
 * Změny oproti verzi 1.1 (DATEX II 2.3):
 ** Formát je převeden na model DATEX II 3.7. Obálky `d2LogicalModel` a `exchange`
-   se nepoužívají; kořen je `d2:payload`, formát určují atributy `profileName` a `profileVersion`.
+   se nepoužívají; kořen je `d2:payload`, formát určují atributy `@profileName` a `@profileVersion`.
 ** Kvalitu dat a počet vozidel nenese rozšíření NDIC, ale nativní atributy modelu.
 ** Stav provozu, stupeň provozu a kolony se poskytují jen pro všechna vozidla; rozšíření NDIC neobsahuje
    typ vozidla. Rychlosti a dojezdové doby zůstávají i pro osobní a nákladní automobily.

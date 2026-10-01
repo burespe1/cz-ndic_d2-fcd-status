@@ -7,8 +7,8 @@
   documentation of the format cz-ndic_d2-fcd-v1.1 (DATEX II 2.3).
 * Changes compared with version 1.1 (DATEX II 2.3):
 ** The format is converted to the DATEX II 3.7 model. The envelopes `d2LogicalModel` and `exchange` are not
-   used; the root is `d2:payload`, the format is determined by the attributes `profileName` and
-   `profileVersion`.
+   used; the root is `d2:payload`, the format is determined by the attributes `@profileName` and
+   `@profileVersion`.
 ** Data quality and the number of vehicles are carried by native attributes of the model, not by the NDIC
    extension.
 ** Traffic status, level of traffic and queues are provided for all vehicles only; the NDIC extension
