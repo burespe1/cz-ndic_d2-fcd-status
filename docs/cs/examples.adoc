@@ -4,8 +4,9 @@ Vzorky jsou součástí balíčku specifikace `{schema-uri}.zip` (adresář `sam
 
 === fcd-all-lorry-car-sample.xml – segment s odděleným dopravním proudem
 
-Publikace obsahuje informace pro jeden segment s odděleným dopravním proudem: sedm elementů
-`physicalQuantity` – stav provozu pro všechna vozidla a rychlost a dojezdovou dobu pro všechna vozidla,
+Skutečná data z 30. 9. 2026: dálniční segment `TS25575T01325` s odděleným dopravním proudem v noci.
+Publikace obsahuje sedm elementů `physicalQuantity` – stav provozu pro všechna vozidla, rychlost pro všechna
+vozidla, osobní a nákladní automobily, dojezdovou dobu pro všechna vozidla a rychlost volného provozu pro
 osobní a nákladní automobily.
 
 [source,xml]
@@ -19,29 +20,20 @@ a identifikací rozšíření `extensionName`, `extensionVersion`, `feedType` od
 čas výpočtu `timeDefault`.
 
 Stav provozu::
-Pro všechna vozidla je rychlost 38 km/h při rychlosti volného provozu 50 km/h (76 %), stav je tedy
-`freeFlow`. Rozšíření NDIC uvádí stupeň provozu podle poměru rychlostí `level2` a kolonu dlouhou 148 m
-od 40 % do 90 % délky segmentu. Nákladní automobily jedou 18 km/h, osobní 58 km/h.
+Pro všechna vozidla je rychlost 111 km/h při rychlosti volného provozu 130 km/h (85 %), stav je tedy
+`freeFlow` a stupeň provozu v rozšíření NDIC `level1`; kolona není. Osobní automobily jedou 110 km/h
+(volný provoz 130 km/h), nákladní 100 km/h (volný provoz 80 km/h).
 
 Dojezdová doba::
-Pro všechna vozidla 549 s oproti 259 s při volném provozu, zpoždění `travelTimeDelay` tedy 290 s.
+Pro všechna vozidla 87 s oproti 74 s při volném provozu, zpoždění `travelTimeDelay` tedy 13 s.
 
 Kvalita a počet vozidel::
-Atributy `supplierCalculatedDataQuality` (v procentech) a `numberOfInputValuesUsed` (počet plovoucích
-vozidel, `9999` u statistických hodnot) u každé hodnoty.
+Hodnoty pro všechna vozidla mají `supplierCalculatedDataQuality` (95 %) a `numberOfInputValuesUsed`
+(10 vozidel), rychlosti osobních a nákladních automobilů jen počet vozidel (3 a 7); hodnoty při volném
+provozu atributy kvality nemají.
 
 Poloha::
-Všechny hodnoty odkazují na předdefinovanou polohu `TS02125T15781` verze `260601` ze sady poloh FCD (vzorek `predefined_location_set-fcd.xml` formátu `cz-ndic_d2-pls`).
-
-=== fcd-all-lorry-car-sample-no-data.xml – segment bez aktuálních dat
-
-Pro tentýž segment nejsou k dispozici aktuální data: publikace obsahuje jen tři elementy
-`physicalQuantity` typu `TravelTimeData` s dojezdovou dobou a rychlostí při volném provozu.
-
-[source,xml]
-----
-include::{samplesdir}/fcd-all-lorry-car-sample-no-data.xml[tags=**]
-----
+Všechny hodnoty odkazují na předdefinovanou polohu `TS25575T01325` verze `260601` ze sady poloh FCD (vzorek `predefined_location_set-fcd.xml` formátu `cz-ndic_d2-pls`).
 
 === fcd-congestion.xml – segment s kolonou
 

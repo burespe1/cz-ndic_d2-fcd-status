@@ -2,9 +2,9 @@
 
 The format provides traffic state information obtained from floating car data (FCD) on a set of predefined
 sections of the road network (segments): travel times, traffic speed, traffic status and level of traffic,
-and an estimate of the length and position of queues. Speeds and travel times are provided for all
-vehicles together and separately for cars and lorries; traffic status, level of traffic and queues for all
-vehicles only.
+and an estimate of the length and position of queues. Speeds are provided for all vehicles together and
+separately for cars and lorries; travel times, traffic status, level of traffic and queues for all vehicles
+only.
 
 The format is based on the DATEX II `ElaboratedDataPublication` <<EN16157-5>>. Levels of traffic as used
 in the Czech Republic and queues are added by the *NDIC extension* (level B extension according to
@@ -65,7 +65,7 @@ delay (`travelTimeDelay`) [s] and free-flow speed (`freeFlowSpeed`) [km/h]
 
 A segment with a mixed traffic flow therefore has three `physicalQuantity` elements. Segments where speed
 and travel time are evaluated separately by vehicle type have up to seven (traffic status for all vehicles,
-speed and travel time for `anyVehicle`, `car` and `lorry`), depending on whether vehicles of the given type
+speed and `TravelTimeData` for `anyVehicle`, `car` and `lorry`), depending on whether vehicles of the given type
 were present on the segment during the evaluation. The element `physicalQuantity` has no identifier of its
 own; it is uniquely determined by the publication time, the referenced location, the `basicData` type and
 the vehicle type.
@@ -75,9 +75,10 @@ the vehicle type.
 
 Segments with a *mixed traffic flow* (vehicles travel together, e.g. in one lane) carry information for all
 vehicles only (`anyVehicle`). Segments with a *separated traffic flow* (several lanes where speeds of cars
-and lorries differ) additionally carry speed and travel time for cars (`car`) and lorries (`lorry`). Traffic
-status, level of traffic and queues are given for all vehicles only (`TrafficStatus` states no vehicle
-type). The vehicle type is given:
+and lorries differ) additionally carry the current speed (`TrafficSpeed`) and the free-flow speed
+(`TravelTimeData` with `freeFlowSpeed` only) for cars (`car`) and lorries (`lorry`). Travel time, free-flow
+travel time and delay are given for all vehicles only, as are traffic status, level of traffic and queues
+(`TrafficStatus` states no vehicle type). The vehicle type is given:
 
 * in `TrafficSpeed` in `forVehiclesWithCharacteristicsOf/vehicleType`,
 * in `TravelTimeData` directly in `vehicleType`.
@@ -85,13 +86,16 @@ type). The vehicle type is given:
 [[kvalita]]
 ==== Data quality and number of vehicles
 
-Each calculated value carries attributes of the model (class `DataValue`):
+Calculated values carry attributes of the model (class `DataValue`):
 
 * `supplierCalculatedDataQuality` – reliability of the value in per cent (0–100, 100 = fully reliable).
   It is assessed from the age and amount of the probe vehicle data used; the formula is not part of the
   format.
-* `numberOfInputValuesUsed` – number of floating vehicles the value was calculated from. Values not
-  depending on current vehicles (statistical `freeFlowSpeed`, `freeFlowTravelTime`) have the value `9999`.
+* `numberOfInputValuesUsed` – number of floating vehicles the value was calculated from.
+
+Values for all vehicles (`trafficStatus`, `averageVehicleSpeed`, `travelTime`) carry both attributes, speeds
+of cars and lorries only `numberOfInputValuesUsed`. Values not depending on current vehicles (statistical
+`freeFlowSpeed`, `freeFlowTravelTime`) carry no quality attributes.
 
 .Traffic status for all vehicles (sample `fcd-all-lorry-car-sample.xml`)
 [source,xml]
@@ -205,11 +209,10 @@ The full description of the extension classes is in the element tables starting 
 [[dostupnost]]
 === Providing available data only
 
-If no data are available for calculating the current state of a segment, only the free-flow information is
-provided for it (`TravelTimeData` with `freeFlowTravelTime` and `freeFlowSpeed`); elements with current
-speed, status and travel time are omitted. A segment with current data thus has up to seven
-`physicalQuantity` elements, a segment without them only three (see sample
-`fcd-all-lorry-car-sample-no-data.xml`).
+The publication contains only segments for which current data are available at the time of evaluation;
+a segment without them is not included. The same applies to vehicle types: the speed of cars or lorries
+(together with their free-flow speed) is given only if vehicles of that type passed the segment. A missing
+segment must therefore not be interpreted as free flow.
 
 [[platnost]]
 === Time validity and age of data

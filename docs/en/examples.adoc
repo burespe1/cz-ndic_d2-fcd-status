@@ -4,9 +4,9 @@ Samples are part of the specification package `{schema-uri}.zip` (directory `sam
 
 === fcd-all-lorry-car-sample.xml – segment with a separated traffic flow
 
-The publication contains information for one segment with a separated traffic flow: seven
-`physicalQuantity` elements – traffic status for all vehicles and speed and travel time for all vehicles,
-cars and lorries.
+Real data of 30 September 2026: motorway segment `TS25575T01325` with a separated traffic flow at night.
+The publication contains seven `physicalQuantity` elements – traffic status for all vehicles, speed for all
+vehicles, cars and lorries, travel time for all vehicles and free-flow speed for cars and lorries.
 
 [source,xml]
 ----
@@ -19,29 +19,20 @@ Root `d2:payload` of type `roa:ElaboratedDataPublication` with the attributes `p
 to the data source; publication period 300 s (`periodDefault`), calculation time `timeDefault`.
 
 Traffic status::
-For all vehicles the speed is 38 km/h at a free-flow speed of 50 km/h (76 %), hence the status is
-`freeFlow`. The NDIC extension gives the level of traffic `level2` according to the speed ratio and a queue
-148 m long from 40 % to 90 % of the segment length. Lorries travel at 18 km/h, cars at 58 km/h.
+For all vehicles the speed is 111 km/h at a free-flow speed of 130 km/h (85 %), hence the status is
+`freeFlow` and the level of traffic in the NDIC extension `level1`; there is no queue. Cars travel at
+110 km/h (free flow 130 km/h), lorries at 100 km/h (free flow 80 km/h).
 
 Travel time::
-For all vehicles 549 s compared with 259 s in free flow, hence a delay `travelTimeDelay` of 290 s.
+For all vehicles 87 s compared with 74 s in free flow, hence a delay `travelTimeDelay` of 13 s.
 
 Quality and number of vehicles::
-Attributes `supplierCalculatedDataQuality` (in per cent) and `numberOfInputValuesUsed` (number of floating
-vehicles, `9999` for statistical values) on each value.
+Values for all vehicles carry `supplierCalculatedDataQuality` (95 %) and `numberOfInputValuesUsed`
+(10 vehicles), speeds of cars and lorries only the number of vehicles (3 and 7); free-flow values carry no
+quality attributes.
 
 Location::
-All values refer to the predefined location `TS02125T15781` version `260601` from the FCD location set (sample `predefined_location_set-fcd.xml` of the format `cz-ndic_d2-pls`).
-
-=== fcd-all-lorry-car-sample-no-data.xml – segment without current data
-
-No current data are available for the same segment: the publication contains only three `physicalQuantity`
-elements of type `TravelTimeData` with the free-flow travel time and speed.
-
-[source,xml]
-----
-include::{samplesdir}/fcd-all-lorry-car-sample-no-data.xml[tags=**]
-----
+All values refer to the predefined location `TS25575T01325` version `260601` from the FCD location set (sample `predefined_location_set-fcd.xml` of the format `cz-ndic_d2-pls`).
 
 === fcd-congestion.xml – segment with a queue
 

@@ -9,7 +9,7 @@
   </com:publicationCreator>
   <!-- end::header[] -->
   <roa:periodDefault>300</roa:periodDefault>
-  <roa:timeDefault>2026-09-30T01:14:00+02:00</roa:timeDefault>
+  <roa:timeDefault>2026-09-30T01:17:00+02:00</roa:timeDefault>
   <roa:headerInformation>
     <com:confidentiality>noRestriction</com:confidentiality>
     <com:informationStatus>real</com:informationStatus>

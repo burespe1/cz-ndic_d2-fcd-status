@@ -2,7 +2,7 @@
 <d2:payload xmlns:d2="http://datex2.eu/schema/3/d2Payload" xmlns:com="http://datex2.eu/schema/3/common" xmlns:loc="http://datex2.eu/schema/3/locationReferencing" xmlns:roa="http://datex2.eu/schema/3/roadTrafficData" xmlns:ndic="http://ndic.cz/datex2/fcd/extension/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="roa:ElaboratedDataPublication" lang="cs" modelBaseVersion="3" profileName="cz-ndic_d2-fcd-status" profileVersion="2.0" extensionName="cz-ndic_d2-fcd-extension" extensionVersion="1.0">
   <!-- tag::header[] -->
   <com:feedType>x-source:cz-ndic_d2-fcd-status-v3</com:feedType>
-  <com:publicationTime>2022-12-18T00:00:06+01:00</com:publicationTime>
+  <com:publicationTime>2026-09-30T01:17:58+02:00</com:publicationTime>
   <com:publicationCreator>
     <com:country>cz</com:country>
     <com:nationalIdentifier>ŘSD</com:nationalIdentifier>
@@ -10,7 +10,7 @@
   <!-- end::header[] -->
   <!-- tag::timing[] -->
   <roa:periodDefault>300</roa:periodDefault>
-  <roa:timeDefault>2022-12-17T23:59:35+01:00</roa:timeDefault>
+  <roa:timeDefault>2026-09-30T01:17:00+02:00</roa:timeDefault>
   <!-- end::timing[] -->
   <roa:headerInformation>
     <com:confidentiality>noRestriction</com:confidentiality>
@@ -19,15 +19,15 @@
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <!-- tag::loc-ref[] -->
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS25575T01325" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <!-- end::loc-ref[] -->
     <roa:basicData xsi:type="roa:TrafficStatus">
       <!-- tag::status[] -->
       <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+        <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
-      <roa:trafficStatus numberOfInputValuesUsed="9" supplierCalculatedDataQuality="100">
+      <roa:trafficStatus supplierCalculatedDataQuality="95" numberOfInputValuesUsed="10">
         <roa:trafficStatusValue>freeFlow</roa:trafficStatusValue>
       </roa:trafficStatus>
       <!-- end::status[] -->
@@ -35,15 +35,8 @@
       <roa:_trafficStatusExtension>
         <ndic:ndicFcdExtension>
           <ndic:trafficLevel>
-            <ndic:trafficLevelValue>level2</ndic:trafficLevelValue>
+            <ndic:trafficLevelValue>level1</ndic:trafficLevelValue>
           </ndic:trafficLevel>
-          <ndic:queueInformation>
-            <ndic:queue>
-              <ndic:queueLength>148</ndic:queueLength>
-              <ndic:fromPoint>40</ndic:fromPoint>
-              <ndic:toPoint>90</ndic:toPoint>
-            </ndic:queue>
-          </ndic:queueInformation>
         </ndic:ndicFcdExtension>
       </roa:_trafficStatusExtension>
       <!-- end::ext[] -->
@@ -51,122 +44,104 @@
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS25575T01325" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <!-- tag::speed[] -->
     <roa:basicData xsi:type="roa:TrafficSpeed">
       <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+        <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
       <roa:forVehiclesWithCharacteristicsOf>
         <com:vehicleType>anyVehicle</com:vehicleType>
       </roa:forVehiclesWithCharacteristicsOf>
-      <roa:averageVehicleSpeed numberOfInputValuesUsed="9" supplierCalculatedDataQuality="100">
-        <com:speed>38</com:speed>
+      <roa:averageVehicleSpeed supplierCalculatedDataQuality="95" numberOfInputValuesUsed="10">
+        <com:speed>111</com:speed>
       </roa:averageVehicleSpeed>
     </roa:basicData>
     <!-- end::speed[] -->
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS25575T01325" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <roa:basicData xsi:type="roa:TrafficSpeed">
       <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+        <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
       <roa:forVehiclesWithCharacteristicsOf>
         <com:vehicleType>car</com:vehicleType>
       </roa:forVehiclesWithCharacteristicsOf>
-      <roa:averageVehicleSpeed numberOfInputValuesUsed="5" supplierCalculatedDataQuality="85">
-        <com:speed>58</com:speed>
+      <roa:averageVehicleSpeed numberOfInputValuesUsed="3">
+        <com:speed>110</com:speed>
       </roa:averageVehicleSpeed>
     </roa:basicData>
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS25575T01325" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <roa:basicData xsi:type="roa:TrafficSpeed">
       <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+        <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
       <roa:forVehiclesWithCharacteristicsOf>
         <com:vehicleType>lorry</com:vehicleType>
       </roa:forVehiclesWithCharacteristicsOf>
-      <roa:averageVehicleSpeed numberOfInputValuesUsed="4" supplierCalculatedDataQuality="75">
-        <com:speed>18</com:speed>
+      <roa:averageVehicleSpeed numberOfInputValuesUsed="7">
+        <com:speed>100</com:speed>
       </roa:averageVehicleSpeed>
     </roa:basicData>
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS25575T01325" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <!-- tag::traveltime[] -->
     <roa:basicData xsi:type="roa:TravelTimeData">
       <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+        <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
       <roa:vehicleType>anyVehicle</roa:vehicleType>
-      <roa:travelTime numberOfInputValuesUsed="9" supplierCalculatedDataQuality="100">
-        <roa:duration>549</roa:duration>
+      <roa:travelTime supplierCalculatedDataQuality="95" numberOfInputValuesUsed="10">
+        <roa:duration>87</roa:duration>
       </roa:travelTime>
-      <roa:freeFlowTravelTime numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="100">
-        <roa:duration>259</roa:duration>
+      <roa:freeFlowTravelTime>
+        <roa:duration>74</roa:duration>
       </roa:freeFlowTravelTime>
       <roa:travelTimeDelay>
-        <roa:duration>290</roa:duration>
+        <roa:duration>13</roa:duration>
       </roa:travelTimeDelay>
-      <roa:freeFlowSpeed numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="80">
-        <com:speed>50</com:speed>
+      <roa:freeFlowSpeed>
+        <com:speed>130</com:speed>
       </roa:freeFlowSpeed>
     </roa:basicData>
     <!-- end::traveltime[] -->
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS25575T01325" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <roa:basicData xsi:type="roa:TravelTimeData">
       <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+        <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
       <roa:vehicleType>car</roa:vehicleType>
-      <roa:travelTime numberOfInputValuesUsed="5" supplierCalculatedDataQuality="85">
-        <roa:duration>499</roa:duration>
-      </roa:travelTime>
-      <roa:freeFlowTravelTime numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="100">
-        <roa:duration>259</roa:duration>
-      </roa:freeFlowTravelTime>
-      <roa:travelTimeDelay>
-        <roa:duration>240</roa:duration>
-      </roa:travelTimeDelay>
-      <roa:freeFlowSpeed numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="80">
-        <com:speed>55</com:speed>
+      <roa:freeFlowSpeed>
+        <com:speed>130</com:speed>
       </roa:freeFlowSpeed>
     </roa:basicData>
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS25575T01325" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <roa:basicData xsi:type="roa:TravelTimeData">
       <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
+        <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
       <roa:vehicleType>lorry</roa:vehicleType>
-      <roa:travelTime numberOfInputValuesUsed="4" supplierCalculatedDataQuality="100">
-        <roa:duration>587</roa:duration>
-      </roa:travelTime>
-      <roa:freeFlowTravelTime numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="100">
-        <roa:duration>279</roa:duration>
-      </roa:freeFlowTravelTime>
-      <roa:travelTimeDelay>
-        <roa:duration>308</roa:duration>
-      </roa:travelTimeDelay>
-      <roa:freeFlowSpeed numberOfInputValuesUsed="9999" supplierCalculatedDataQuality="80">
-        <com:speed>50</com:speed>
+      <roa:freeFlowSpeed>
+        <com:speed>80</com:speed>
       </roa:freeFlowSpeed>
     </roa:basicData>
   </roa:physicalQuantity>

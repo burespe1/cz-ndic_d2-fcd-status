@@ -2,9 +2,9 @@
 
 Formát poskytuje stavové informace o dopravě získané z plovoucích vozidel (FCD) na sadě předem
 definovaných úseků silniční sítě (segmentů): dojezdové doby, rychlost dopravního proudu, stav provozu
-a stupně provozu, odhad délky a polohy kolon. Rychlosti a dojezdové doby se poskytují souhrnně pro všechna
-vozidla a odděleně pro osobní a nákladní automobily; stav provozu, stupeň provozu a kolony jen pro všechna
-vozidla.
+a stupně provozu, odhad délky a polohy kolon. Rychlosti se poskytují souhrnně pro všechna vozidla
+a odděleně pro osobní a nákladní automobily; dojezdové doby, stav provozu, stupeň provozu a kolony jen pro
+všechna vozidla.
 
 Formát vychází z DATEX II publikace `ElaboratedDataPublication` <<EN16157-5>>. Stupně provozu podle
 zvyklostí v ČR a kolony doplňuje *rozšíření NDIC* (rozšíření úrovně B
@@ -65,7 +65,7 @@ Každá hodnota pro jeden segment a jeden typ vozidla je samostatný element `ph
 
 Pro segment se sdruženým dopravním proudem jsou tedy tři elementy `physicalQuantity`. Na segmentech, kde se
 rychlost a dojezdová doba vyhodnocují odděleně podle typu vozidla, je jich až sedm (stav provozu pro všechna
-vozidla, rychlost a dojezdová doba pro `anyVehicle`, `car` a `lorry`), podle toho, zda se daný typ vozidel
+vozidla, rychlost a `TravelTimeData` pro `anyVehicle`, `car` a `lorry`), podle toho, zda se daný typ vozidel
 na segmentu v době vyhodnocení vyskytoval. Element `physicalQuantity`
 nemá vlastní identifikátor; jednoznačně jej určuje čas publikace, odkazovaná poloha, typ `basicData`
 a typ vozidla.
@@ -75,9 +75,10 @@ a typ vozidla.
 
 Segmenty se *sdruženým dopravním proudem* (vozidla jedou smíšeně, např. v jednom pruhu) mají jen
 informace pro všechna vozidla (`anyVehicle`). Segmenty s *odděleným dopravním proudem* (více pruhů, kde
-se rychlosti osobních a nákladních automobilů liší) mají navíc rychlost a dojezdovou dobu pro osobní
-(`car`) a nákladní (`lorry`) automobily. Stav provozu, stupeň provozu a kolony se uvádějí jen pro všechna
-vozidla (`TrafficStatus` typ vozidla neuvádí). Typ vozidla se uvádí:
+se rychlosti osobních a nákladních automobilů liší) mají navíc aktuální rychlost (`TrafficSpeed`) a rychlost
+volného provozu (`TravelTimeData` jen s `freeFlowSpeed`) pro osobní (`car`) a nákladní (`lorry`) automobily.
+Dojezdová doba, dojezdová doba při volném provozu a zpoždění se uvádějí jen pro všechna vozidla, stejně jako
+stav provozu, stupeň provozu a kolony (`TrafficStatus` typ vozidla neuvádí). Typ vozidla se uvádí:
 
 * u `TrafficSpeed` v `forVehiclesWithCharacteristicsOf/vehicleType`,
 * u `TravelTimeData` přímo v `vehicleType`.
@@ -85,14 +86,16 @@ vozidla (`TrafficStatus` typ vozidla neuvádí). Typ vozidla se uvádí:
 [[kvalita]]
 ==== Kvalita dat a počet vozidel
 
-Každá vypočtená hodnota nese atributy modelu (třída `DataValue`):
+Vypočtené hodnoty nesou atributy modelu (třída `DataValue`):
 
 * `supplierCalculatedDataQuality` – míra spolehlivosti hodnoty v procentech (0–100, 100 = zcela
   spolehlivá). Hodnotí se podle stáří a množství použitých údajů z vozidlových sond; vzorec výpočtu
   není součástí formátu.
-* `numberOfInputValuesUsed` – počet plovoucích vozidel, ze kterých byla hodnota vypočtena. Hodnoty
-  nezávislé na aktuálních vozidlech (statistické `freeFlowSpeed`, `freeFlowTravelTime`) mají hodnotu
-  `9999`.
+* `numberOfInputValuesUsed` – počet plovoucích vozidel, ze kterých byla hodnota vypočtena.
+
+Hodnoty pro všechna vozidla (`trafficStatus`, `averageVehicleSpeed`, `travelTime`) mají oba atributy,
+rychlosti osobních a nákladních automobilů jen `numberOfInputValuesUsed`. Hodnoty nezávislé na aktuálních
+vozidlech (statistické `freeFlowSpeed`, `freeFlowTravelTime`) atributy kvality nemají.
 
 .Stav provozu pro všechna vozidla (vzorek `fcd-all-lorry-car-sample.xml`)
 [source,xml]
@@ -205,11 +208,10 @@ vozidlům. Schéma rozšíření `cz-ndic_d2-fcd-extension-1.0.xsd` je součást
 [[dostupnost]]
 === Poskytování jen dostupných dat
 
-Nejsou-li pro segment k dispozici data pro výpočet aktuálního stavu, přenášejí se k němu pouze
-informace při volném provozu (`TravelTimeData` s `freeFlowTravelTime` a `freeFlowSpeed`); elementy
-s aktuální rychlostí, stavem a dojezdovou dobou se vynechají. Segment s aktuálními daty tak pokrývá
-až sedm elementů `physicalQuantity`, segment bez nich jen tři (viz vzorek
-`fcd-all-lorry-car-sample-no-data.xml`).
+Publikace obsahuje jen segmenty, pro které jsou v době vyhodnocení k dispozici aktuální data; segment bez
+nich se do publikace nezařadí. Totéž platí pro typy vozidel: rychlost osobních nebo nákladních automobilů
+(a k ní rychlost volného provozu) se uvádí, jen pokud tento typ vozidel segmentem projel. Odběratel proto
+nemá chybějící segment vykládat jako volný provoz.
 
 [[platnost]]
 === Časová platnost a stáří dat
