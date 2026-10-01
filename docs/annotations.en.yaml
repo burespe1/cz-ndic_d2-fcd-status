@@ -9,9 +9,13 @@
 #     required: true    # NDIC vždy vyplňuje
 #     values:           # překlad/upřesnění hodnot výčtu jen pro tento element
 #       certain: jistě nastalo
+#   locationReference:
+#     variants: reduced # u elementu s více typy: výčet typů je zúžený profilem (popisek „zúžený výčet – N“);
+#                       # seznam názvů tříd ([A, B]) uvede jen tyto typy
 #
 # _enum:                # překlady hodnot výčtů pro celý formát (přepisují sdílený slovník kitu)
 #   ProbabilityEnum.certain: jistá
+# _unused_types: [LinearLocation]   # třídy, které schéma připouští, ale formát nepoužívá (ve výčtech variant se neuvádějí)
 
 TrafficStatus:
   _trafficStatusExtension: >-

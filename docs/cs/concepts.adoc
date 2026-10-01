@@ -26,9 +26,8 @@ Formát, podle kterého je zpráva sestavena, identifikují výhradně atributy 
 
 Hlavička publikace obsahuje:
 
-* `feedType` – identifikátor zdroje dat (distribuce) v registru národního přístupového bodu <<nap>>.
-  Zdroj odkazuje na formát, ve kterém data poskytuje; formát zprávy určují atributy `profileName`
-  a `profileVersion`. Element `feedDescription` se nepoužívá.
+* `feedType` – identifikátor zdroje dat, ze kterého zpráva pochází. Formát zprávy určují atributy
+  `profileName` a `profileVersion`, nikoli `feedType`. Element `feedDescription` se nepoužívá.
 * `publicationTime` – čas vytvoření obsahu publikace. Pokud se obsah od předchozí publikace nezměnil,
   zůstává čas původní; nový čas vzniká jen se
   změnou obsahu.
@@ -240,7 +239,7 @@ jdoucími body lokační tabulky ALERT-C <<ISO14819-3>>, úseky sítě Global Ne
 
 Formát popisuje polohy výhradně odkazem v elementu `pertinentLocation` (typ `loc:LocationByReference`,
 `targetClass` = `loc:PredefinedLocation`) do sady předem definovaných poloh publikované formátem
-`cz-ndic_d2-pls`, související s tímto zdrojem. Odběratel polohu dohledá podle identifikátoru a verze.
+`cz-ndic_d2-pls` (sada úseků FCD). Odběratel polohu dohledá podle identifikátoru a verze.
 
 Segmenty sady FCD jsou úseky mezi dvěma po sobě jdoucími lokacemi lokační tabulky ALERT-C ČR (tabulka 25);
 každý směr jízdy je samostatný segment. Identifikátor segmentu je z těchto lokací složen ve tvaru

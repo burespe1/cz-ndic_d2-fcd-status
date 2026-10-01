@@ -27,9 +27,8 @@ The format according to which the message is built is identified solely by attri
 
 The publication header contains:
 
-* `feedType` – identifier of the data source (distribution) in the register of the national access point
-  <<nap>>. The source refers to the format in which it provides data; the message format is determined by
-  the attributes `profileName` and `profileVersion`. The element `feedDescription` is not used.
+* `feedType` – identifier of the data source the message comes from. The format of the message is
+  identified by the `profileName` and `profileVersion` attributes, not by `feedType`. The `feedDescription` element is not used.
 * `publicationTime` – time the publication content was created. If the content has not changed since the
   previous publication, the original time is kept; a new time is set only when the content changes.
 * `publicationCreator` – publisher: country code in lower case (`cz`) and the publisher's abbreviation
@@ -243,7 +242,7 @@ the physical layout of the road.
 
 The format references locations solely in the element `pertinentLocation` (type `loc:LocationByReference`,
 `targetClass` = `loc:PredefinedLocation`) to the set of predefined locations published in the format
-`cz-ndic_d2-pls` related to this source. The recipient looks the location up by its identifier and version.
+`cz-ndic_d2-pls` (set of FCD segments). The recipient looks the location up by its identifier and version.
 
 Segments of the FCD set are sections between two consecutive locations of the Czech ALERT-C location
 table (table 25); each direction of travel is a separate segment. The segment identifier is composed of
