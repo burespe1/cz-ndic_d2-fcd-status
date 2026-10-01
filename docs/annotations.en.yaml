@@ -17,3 +17,25 @@ TrafficStatus:
   _trafficStatusExtension: >-
     Extension point; in this format it carries the NDIC extension <<el-NdicFcdExtension,`ndic:NdicFcdExtension`>>
     (traffic level and queues), for all vehicles only – see <<rozsireni,Structure of the NDIC extension>>.
+NdicFcdExtension:
+  _: NDIC extension of the traffic status on a segment – traffic level according to Czech practice and queues. Applies to all vehicles.
+  trafficLevel: Traffic level on the segment according to the national classification.
+  queueInformation: Queues detected on the segment.
+TrafficLevel:
+  _: Traffic level according to the national classification, derived from the ratio of the current speed to the free-flow speed on the segment.
+  trafficLevelValue:
+    note: Traffic level (`level1` to `level5`).
+    values:
+      level1: individual vehicles, free flow (speed ratio 85–100 %)
+      level2: groups of vehicles, free flow (75–85 %)
+      level3: streams of vehicles, fluent traffic, speed below the limit (50–75 %)
+      level4: queues forming, unstable traffic, significantly reduced speed (20–50 %)
+      level5: traffic collapse, vehicles stationary or moving slowly in queues (0–20 %)
+QueueInformation:
+  _: Queues on the segment.
+  queue: Queue on the segment; in practice one.
+Queue:
+  _: Queue on the segment – length and position relative to the start of the segment in the direction of traffic.
+  queueLength: Total length of congestion on the segment in metres.
+  fromPoint: Start of the queue as the distance from the start of the segment in percent of its length (0–100).
+  toPoint: End of the queue as the distance from the start of the segment in percent of its length (0–100).
