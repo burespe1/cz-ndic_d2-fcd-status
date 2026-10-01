@@ -51,8 +51,8 @@ include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=header,indent=2]
 === Struktura publikace
 
 Každá hodnota pro jeden segment a jeden typ vozidla je samostatný element `physicalQuantity` typu
-`roa:SinglePhysicalQuantity`. Ten obsahuje odkaz na polohu segmentu (`pertinentLocation`), volitelně
-identifikátor segmentu u poskytovatele (`source`) a vlastní hodnotu `basicData` jednoho z typů:
+`roa:SinglePhysicalQuantity`. Ten obsahuje odkaz na polohu segmentu (`pertinentLocation`) a vlastní hodnotu
+`basicData` jednoho z typů:
 
 [cols="2,4",options="header"]
 |===
@@ -200,6 +200,8 @@ vozidlům. Schéma rozšíření `cz-ndic_d2-fcd-extension-1.0.xsd` je součást
 |`queue/toPoint` |0..1 |konec kolony od počátku segmentu [%]
 |===
 
+Úplný popis tříd rozšíření je v tabulkách elementů od <<el-NdicFcdExtension,`ndic:NdicFcdExtension`>> (kapitola Struktura XML).
+
 [[dostupnost]]
 === Poskytování jen dostupných dat
 
@@ -238,8 +240,13 @@ Formát popisuje polohy výhradně odkazem v elementu `pertinentLocation` (typ `
 `targetClass` = `loc:PredefinedLocation`) do sady předem definovaných poloh publikované formátem
 `cz-ndic_d2-pls`, související s tímto zdrojem. Odběratel polohu dohledá podle identifikátoru a verze.
 
-Vedle odkazu může poskytovatel nepovinně uvést vlastní identifikátor segmentu v elementu `source`
-(`sourceIdentification`). Je-li shodný s identifikátorem v odkazu na polohu, neuvádí se.
+Segmenty sady FCD jsou úseky mezi dvěma po sobě jdoucími lokacemi lokační tabulky ALERT-C ČR (tabulka 25);
+každý směr jízdy je samostatný segment. Identifikátor segmentu je z těchto lokací složen ve tvaru
+`TS<od>T<do>`, kde `<od>` a `<do>` jsou kódy lokací doplněné nulami na pět číslic: `TS02125T15781` je
+segment z lokace 2125 do lokace 15781, opačný směr je `TS15781T02125`. Verze polohy odpovídá vydání sítě,
+ze kterého je sada poloh odvozena (`260601` pro síť 26.06). Odběratel s lokační tabulkou tak segment určí
+i bez sady poloh; úplný popis (ALERT-C se směrem, OpenLR, úseky Global Network a průběh polohy) obsahuje
+sada poloh.
 
 .Odkaz na polohu segmentu (vzorek `fcd-all-lorry-car-sample.xml`)
 [source,xml]

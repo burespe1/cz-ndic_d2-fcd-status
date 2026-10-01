@@ -12,4 +12,8 @@
 #
 # _enum:                # překlady hodnot výčtů pro celý formát (přepisují sdílený slovník kitu)
 #   ProbabilityEnum.certain: jistá
-{}
+
+TrafficStatus:
+  _trafficStatusExtension: >-
+    Extension point; in this format it carries the NDIC extension <<el-NdicFcdExtension,`ndic:NdicFcdExtension`>>
+    (traffic level and queues), for all vehicles only – see <<rozsireni,Structure of the NDIC extension>>.

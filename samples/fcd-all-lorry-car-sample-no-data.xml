@@ -14,7 +14,7 @@
   </roa:headerInformation>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="6D476A44-AA44-4947-AA4B-7C4DD79BB67E" version="0" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <roa:basicData xsi:type="roa:TravelTimeData">
       <roa:measurementOrCalculationTime>
@@ -31,7 +31,7 @@
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="6D476A44-AA44-4947-AA4B-7C4DD79BB67E" version="0" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <roa:basicData xsi:type="roa:TravelTimeData">
       <roa:measurementOrCalculationTime>
@@ -48,7 +48,7 @@
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
     <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="6D476A44-AA44-4947-AA4B-7C4DD79BB67E" version="0" targetClass="loc:PredefinedLocation"/>
+      <loc:predefinedLocationReference id="TS02125T15781" version="260601" targetClass="loc:PredefinedLocation"/>
     </roa:pertinentLocation>
     <roa:basicData xsi:type="roa:TravelTimeData">
       <roa:measurementOrCalculationTime>

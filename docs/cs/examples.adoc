@@ -31,7 +31,7 @@ Atributy `supplierCalculatedDataQuality` (v procentech) a `numberOfInputValuesUs
 vozidel, `9999` u statistických hodnot) u každé hodnoty.
 
 Poloha::
-Všechny hodnoty odkazují na předdefinovanou polohu `6D476A44-AA44-4947-AA4B-7C4DD79BB67E` verze 0.
+Všechny hodnoty odkazují na předdefinovanou polohu `TS02125T15781` verze `260601` ze sady poloh FCD (vzorek `predefined_location_set-fcd.xml` formátu `cz-ndic_d2-pls`).
 
 === fcd-all-lorry-car-sample-no-data.xml – segment bez aktuálních dat
 
@@ -62,5 +62,4 @@ Dojezdová doba::
 916 s oproti 133 s při volném provozu, zpoždění `travelTimeDelay` 783 s.
 
 Poloha::
-Hodnoty odkazují na předdefinovanou polohu `TS02125T15781` verze `260601` ze sady poloh FCD; vlastní
-identifikátor segmentu (`source`) se neuvádí, protože je shodný.
+Hodnoty odkazují na předdefinovanou polohu `TS02125T15781` verze `260601` ze sady poloh FCD.

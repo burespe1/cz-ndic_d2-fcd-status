@@ -31,7 +31,7 @@ Attributes `supplierCalculatedDataQuality` (in per cent) and `numberOfInputValue
 vehicles, `9999` for statistical values) on each value.
 
 Location::
-All values refer to the predefined location `6D476A44-AA44-4947-AA4B-7C4DD79BB67E` version 0.
+All values refer to the predefined location `TS02125T15781` version `260601` from the FCD location set (sample `predefined_location_set-fcd.xml` of the format `cz-ndic_d2-pls`).
 
 === fcd-all-lorry-car-sample-no-data.xml – segment without current data
 
@@ -62,5 +62,4 @@ Travel time::
 916 s compared with 133 s in free flow, delay `travelTimeDelay` 783 s.
 
 Location::
-The values refer to the predefined location `TS02125T15781` version `260601` from the FCD location set; the
-provider's own segment identifier (`source`) is not given because it is identical.
+The values refer to the predefined location `TS02125T15781` version `260601` from the FCD location set.

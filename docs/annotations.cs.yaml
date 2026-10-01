@@ -12,4 +12,30 @@
 #
 # _enum:                # překlady hodnot výčtů pro celý formát (přepisují sdílený slovník kitu)
 #   ProbabilityEnum.certain: jistá
-{}
+
+TrafficStatus:
+  _trafficStatusExtension: >-
+    Rozšiřující bod; ve formátu nese rozšíření NDIC <<el-NdicFcdExtension,`ndic:NdicFcdExtension`>>
+    (stupeň provozu a kolony), jen pro všechna vozidla – viz <<rozsireni,Struktura rozšíření NDIC>>.
+NdicFcdExtension:
+  _: Rozšíření NDIC stavu provozu na segmentu – stupeň provozu podle zvyklostí v ČR a kolony. Platí pro všechna vozidla.
+  trafficLevel: Stupeň provozu na segmentu podle národní klasifikace.
+  queueInformation: Kolony zjištěné na segmentu.
+TrafficLevel:
+  _: Stupeň provozu podle národní klasifikace, odvozený z poměru aktuální rychlosti a rychlosti volného provozu na segmentu.
+  trafficLevelValue:
+    note: Stupeň provozu (`level1` až `level5`).
+    values:
+      level1: jednotlivá vozidla, volný provoz (poměr rychlostí 85–100 %)
+      level2: skupiny vozidel, volný provoz (75–85 %)
+      level3: proudy vozidel, plynulý provoz, rychlost pod povolenou (50–75 %)
+      level4: tvorba kolon, nestabilní provoz, výrazně snížená rychlost (20–50 %)
+      level5: dopravní kolaps, vozidla stojí nebo se pomalu posouvají v kolonách (0–20 %)
+QueueInformation:
+  _: Kolony na segmentu.
+  queue: Kolona na segmentu; v praxi jedna.
+Queue:
+  _: Kolona na segmentu – délka a poloha vůči počátku segmentu ve směru provozu.
+  queueLength: Celková délka kongescí na segmentu v metrech.
+  fromPoint: Začátek kolony jako vzdálenost od počátku segmentu v procentech jeho délky (0–100).
+  toPoint: Konec kolony jako vzdálenost od počátku segmentu v procentech jeho délky (0–100).

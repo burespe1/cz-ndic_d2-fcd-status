@@ -51,9 +51,8 @@ include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=header,indent=2]
 === Publication structure
 
 Each value for one segment and one vehicle type is a separate element `physicalQuantity` of type
-`roa:SinglePhysicalQuantity`. It contains the reference to the segment location (`pertinentLocation`),
-optionally the provider's identifier of the segment (`source`) and the value itself, `basicData`, of one of
-the types:
+`roa:SinglePhysicalQuantity`. It contains the reference to the segment location (`pertinentLocation`) and
+the value itself, `basicData`, of one of the types:
 
 [cols="2,4",options="header"]
 |===
@@ -201,6 +200,8 @@ vehicles. The extension schema `cz-ndic_d2-fcd-extension-1.0.xsd` is part of the
 |`queue/toPoint` |0..1 |end of the queue from the start of the segment [%]
 |===
 
+The full description of the extension classes is in the element tables starting at <<el-NdicFcdExtension,`ndic:NdicFcdExtension`>> (chapter XML structure).
+
 [[dostupnost]]
 === Providing available data only
 
@@ -241,9 +242,14 @@ The format references locations solely in the element `pertinentLocation` (type 
 `targetClass` = `loc:PredefinedLocation`) to the set of predefined locations published in the format
 `cz-ndic_d2-pls` related to this source. The recipient looks the location up by its identifier and version.
 
-Besides the reference, the provider may optionally state its own identifier of the segment in the element
-`source` (`sourceIdentification`). If it is the same as the identifier in the location reference, it is not
-given.
+Segments of the FCD set are sections between two consecutive locations of the Czech ALERT-C location
+table (table 25); each direction of travel is a separate segment. The segment identifier is composed of
+these locations in the form `TS<from>T<to>`, where `<from>` and `<to>` are location codes padded with
+zeros to five digits: `TS02125T15781` is the segment from location 2125 to location 15781, the opposite
+direction is `TS15781T02125`. The location version corresponds to the network release from which the
+location set is derived (`260601` for network 26.06). A recipient with the location table can thus
+identify the segment even without the location set; the full description (ALERT-C with direction,
+OpenLR, Global Network sections and the location course) is in the location set.
 
 .Reference to the segment location (sample `fcd-all-lorry-car-sample.xml`)
 [source,xml]

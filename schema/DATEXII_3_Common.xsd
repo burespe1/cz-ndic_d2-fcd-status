@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:com="http://datex2.eu/schema/3/common" version="3.7" targetNamespace="http://datex2.eu/schema/3/common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="_ComputationMethodEnum">
-    <xs:simpleContent>
-      <xs:extension base="com:ComputationMethodEnum">
-        <xs:attribute name="_extendedValue" type="xs:string" />
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
   <xs:complexType name="_ConfidentialityValueEnum">
     <xs:simpleContent>
       <xs:extension base="com:ConfidentialityValueEnum">
@@ -22,13 +15,6 @@
   <xs:complexType name="_InformationStatusEnum">
     <xs:simpleContent>
       <xs:extension base="com:InformationStatusEnum">
-        <xs:attribute name="_extendedValue" type="xs:string" />
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:complexType name="_TrafficTrendTypeEnum">
-    <xs:simpleContent>
-      <xs:extension base="com:TrafficTrendTypeEnum">
         <xs:attribute name="_extendedValue" type="xs:string" />
       </xs:extension>
     </xs:simpleContent>
@@ -79,68 +65,14 @@
       <xs:enumeration value="withOddFirstNumberRegistrationPlate" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="Boolean">
-    <xs:annotation>
-      <xs:documentation>Boolean has the value space required to support the mathematical concept of binary-valued logic: {true, false}. </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:boolean" />
-  </xs:simpleType>
-  <xs:simpleType name="ComputationMethodEnum">
-    <xs:annotation>
-      <xs:documentation>Types of computational methods used in deriving data values for data sets.</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="arithmeticAverageOfSamplesBasedOnAFixedNumberOfSamples">
-        <xs:annotation>
-          <xs:documentation>Arithmetic average of sample values based on a fixed number of samples.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="arithmeticAverageOfSamplesInATimePeriod">
-        <xs:annotation>
-          <xs:documentation>Arithmetic average of sample values in a time period.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="harmonicAverageOfSamplesInATimePeriod">
-        <xs:annotation>
-          <xs:documentation>Harmonic average of sample values in a time period.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="medianOfSamplesInATimePeriod">
-        <xs:annotation>
-          <xs:documentation>Median of sample values taken over a time period.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="movingAverageOfSamples">
-        <xs:annotation>
-          <xs:documentation>Moving average of sample values.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="_extended" />
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="ConfidentialityValueEnum">
     <xs:annotation>
       <xs:documentation>Values of confidentiality.</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:enumeration value="internalUse">
-        <xs:annotation>
-          <xs:documentation>For internal use only of the recipient organisation.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="noRestriction">
         <xs:annotation>
           <xs:documentation>No restriction on usage.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="restrictedToAuthorities">
-        <xs:annotation>
-          <xs:documentation>Restricted for use only by authorities.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="restrictedToAuthoritiesAndTrafficOperators">
-        <xs:annotation>
-          <xs:documentation>Restricted for use only by authorities and traffic operators.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="_extended" />
@@ -159,46 +91,11 @@
       <xs:documentation>A data value of something that can be measured or calculated. Any provided meta-data values specified in the attributes override any specified generic characteristics such as defined for a specific measurement in the MeasurementSiteTable. </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="dataError" type="com:Boolean" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Indication of whether the value is deemed to be erroneous by the supplier (true = erroneous). If not present, the data value is assumed to be ok. This may be used when automatic fault detection information relating to sensors is available.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="reasonForDataError" type="com:MultilingualString" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>The reason why the value is deemed to be erroneous by the supplier.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
       <xs:element name="_dataValueExtension" type="com:_ExtensionType" minOccurs="0" />
     </xs:sequence>
-    <xs:attribute name="accuracy" type="com:Percentage" use="optional">
-      <xs:annotation>
-        <xs:documentation>The extent to which the value is expected to be free from error, measured as a percentage of the data value. 100% means fully accurate.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="computationalMethod" type="com:ComputationMethodEnum" use="optional">
-      <xs:annotation>
-        <xs:documentation>Method of computation which has been used to compute this data value.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="numberOfIncompleteInputs" type="com:NonNegativeInteger" use="optional">
-      <xs:annotation>
-        <xs:documentation>The number of inputs detected but not completed during the sampling or measurement period; e.g. vehicles detected entering but not exiting the detection zone.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
     <xs:attribute name="numberOfInputValuesUsed" type="com:NonNegativeInteger" use="optional">
       <xs:annotation>
         <xs:documentation>The number of input values used in the sampling or measurement period to determine the data value.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="smoothingFactor" type="com:Float" use="optional">
-      <xs:annotation>
-        <xs:documentation>Coefficient required when a moving average is computed to give specific weights to the former average and the new data. A typical formula is, F being the smoothing factor: New average = (old average) F + (new data) (1 - F).</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="standardDeviation" type="com:Float" use="optional">
-      <xs:annotation>
-        <xs:documentation>The standard deviation of the sample of input values from which this value was derived, measured in the units of the data value. </xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:attribute name="supplierCalculatedDataQuality" type="com:Percentage" use="optional">
@@ -213,34 +110,6 @@
     </xs:annotation>
     <xs:restriction base="xs:dateTime" />
   </xs:simpleType>
-  <xs:complexType name="Fault">
-    <xs:annotation>
-      <xs:documentation>Information about a fault relating to a specific piece of equipment or process.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="faultIdentifier" type="com:String" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Unique identifier of the fault.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="faultDescription" type="com:MultilingualString" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Textual description of the fault.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="faultCreationTime" type="com:DateTime" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>The date and time at which the fault was originally recorded/reported.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="faultLastUpdateTime" type="com:DateTime" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>The date and time at which the fault information as specified in this instance was last updated.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="_faultExtension" type="com:_ExtensionType" minOccurs="0" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:simpleType name="Float">
     <xs:annotation>
       <xs:documentation>A floating point number whose value space consists of the values m × 2^e, where m is an integer whose absolute value is less than 2^24, and e is an integer between -149 and 104, inclusive.</xs:documentation>
@@ -275,21 +144,6 @@
           <xs:documentation>The information is real. It is not a test or exercise.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="securityExercise">
-        <xs:annotation>
-          <xs:documentation>The information is part of an exercise which is for testing security.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="technicalExercise">
-        <xs:annotation>
-          <xs:documentation>The information is part of an exercise which includes tests of associated technical subsystems.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="test">
-        <xs:annotation>
-          <xs:documentation>The information is part of a test for checking the exchange of this type of information.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="_extended" />
     </xs:restriction>
   </xs:simpleType>
@@ -322,29 +176,6 @@
       <xs:documentation>A language datatype, identifies a specified language by an ISO 639-1 2-alpha code.</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:language" />
-  </xs:simpleType>
-  <xs:complexType name="MultilingualString">
-    <xs:sequence>
-      <xs:element name="values">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="value" type="com:MultilingualStringValue" maxOccurs="unbounded" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="MultilingualStringValue">
-    <xs:simpleContent>
-      <xs:extension base="com:MultilingualStringValueType">
-        <xs:attribute name="lang" type="xs:language" />
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:simpleType name="MultilingualStringValueType">
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1024" />
-    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="NonNegativeInteger">
     <xs:annotation>
@@ -387,31 +218,6 @@
     </xs:annotation>
     <xs:restriction base="com:Float" />
   </xs:simpleType>
-  <xs:complexType name="PercentageValue">
-    <xs:annotation>
-      <xs:documentation>A measured or calculated value expressed as a percentage (amount per hundred).</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="com:DataValue">
-        <xs:sequence>
-          <xs:element name="percentage" type="com:Percentage" minOccurs="1" maxOccurs="1">
-            <xs:annotation>
-              <xs:documentation>A value expressed as a percentage (amount per hundred).</xs:documentation>
-            </xs:annotation>
-          </xs:element>
-          <xs:element name="_percentageValueExtension" type="com:_ExtensionType" minOccurs="0" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="Period">
-    <xs:annotation>
-      <xs:documentation>A continuous time period or a set of discontinuous time periods defined by the intersection of a set of criteria all within an overall delimiting interval.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="_periodExtension" type="com:_ExtensionType" minOccurs="0" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="Reference">
     <xs:attribute name="id" type="xs:string" use="required" />
   </xs:complexType>
@@ -421,19 +227,6 @@
     </xs:annotation>
     <xs:restriction base="com:Float" />
   </xs:simpleType>
-  <xs:complexType name="Source">
-    <xs:annotation>
-      <xs:documentation>Details of the source from which the information was obtained.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="sourceIdentification" type="com:String" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>Language independent textual code or identifier for the organisation or the equipment that has produced the information.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="_sourceExtension" type="com:_ExtensionType" minOccurs="0" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="SpeedValue">
     <xs:annotation>
       <xs:documentation>A measured or calculated value of speed.</xs:documentation>
@@ -459,34 +252,6 @@
       <xs:maxLength value="1024" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="TrafficTrendTypeEnum">
-    <xs:annotation>
-      <xs:documentation>List of terms used to describe the trend in traffic conditions.</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="trafficBuildingUp">
-        <xs:annotation>
-          <xs:documentation>Traffic conditions are changing from free-flow to heavy or slow service levels.  Queues may also be expected.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="trafficEasing">
-        <xs:annotation>
-          <xs:documentation>Traffic conditions are changing from heavy or slow service levels to free-flow.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="trafficStable">
-        <xs:annotation>
-          <xs:documentation>Traffic conditions are currently stable.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="unknown">
-        <xs:annotation>
-          <xs:documentation>The trend of traffic conditions is currently unknown.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="_extended" />
-    </xs:restriction>
-  </xs:simpleType>
   <xs:complexType name="VehicleCharacteristics">
     <xs:annotation>
       <xs:documentation>The characteristics of a vehicle, e.g. lorry of gross weight greater than 30 tonnes.</xs:documentation>
@@ -505,39 +270,9 @@
       <xs:documentation>Types of vehicle.</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:enumeration value="agriculturalVehicle">
-        <xs:annotation>
-          <xs:documentation>Vehicle normally used for agricultural purposes, e.g. tractor, combined harvester etc.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="anyVehicle">
         <xs:annotation>
           <xs:documentation>Vehicle of any type.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="articulatedBus">
-        <xs:annotation>
-          <xs:documentation>Articulated bus</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="articulatedTrolleyBus">
-        <xs:annotation>
-          <xs:documentation>Articulated trolley bus</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="articulatedVehicle">
-        <xs:annotation>
-          <xs:documentation>Articulated vehicle.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="bicycle">
-        <xs:annotation>
-          <xs:documentation>Bicycle.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="bus">
-        <xs:annotation>
-          <xs:documentation>Bus.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="car">
@@ -545,209 +280,9 @@
           <xs:documentation>Vehicles designed and constructed for the carriage of passengers and comprising no more than eight seats in addition to the driver’s seat, and having a maximum mass (“technically permissible maximum laden mass”) not exceeding 3.5 tons (M1).</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="caravan">
-        <xs:annotation>
-          <xs:documentation>Caravan.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="carOrLightVehicle">
-        <xs:annotation>
-          <xs:documentation>Car or light vehicle.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="carWithCaravan">
-        <xs:annotation>
-          <xs:documentation>Car towing a caravan.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="carWithTrailer">
-        <xs:annotation>
-          <xs:documentation>Car towing a trailer.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="constructionOrMaintenanceVehicle">
-        <xs:annotation>
-          <xs:documentation>Vehicle normally used for construction or maintenance purposes, e.g. digger, excavator, bulldozer, lorry mounted crane etc.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="fourWheelDrive">
-        <xs:annotation>
-          <xs:documentation>Four wheel drive vehicle.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="heavyGoodsVehicle">
-        <xs:annotation>
-          <xs:documentation>Vehicles with a total weight above 3,500 kg (vehicle and load).</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="heavyGoodsVehicleWithTrailer">
-        <xs:annotation>
-          <xs:documentation>Heavy goods vehicle with trailer</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="heavyDutyTransporter">
-        <xs:annotation>
-          <xs:documentation>A transporter for heavy duty (usually with abnormal dimensions).</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="heavyVehicle">
-        <xs:annotation>
-          <xs:documentation>Vehicle whose weight means it should be classed as a heavy vehicle</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="highSidedVehicle">
-        <xs:annotation>
-          <xs:documentation>High sided vehicle.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="lightCommercialVehicle">
-        <xs:annotation>
-          <xs:documentation>Vehicles for the carriage of goods and having a maximum mass not exceeding 3.5 tonnes (class N1).</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="largeCar">
-        <xs:annotation>
-          <xs:documentation>Large car</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="largeGoodsVehicle">
-        <xs:annotation>
-          <xs:documentation>Vehicles for the carriage of goods and having a maximum mass exceeding 3.5 tonnes (belonging to class N2 when not exceeding 12 tonnes, otherwise class N3).</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="lightCommercialVehicleWithTrailer">
-        <xs:annotation>
-          <xs:documentation>Light goods vehicle with trailer</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="longHeavyLorry">
-        <xs:annotation>
-          <xs:documentation>A heavy lorry that is longer than normal.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="lorry">
         <xs:annotation>
           <xs:documentation>Lorry of any type.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="metro">
-        <xs:annotation>
-          <xs:documentation>Metro</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="minibus">
-        <xs:annotation>
-          <xs:documentation>Vehicles designed and constructed for the carriage of passengers, comprising more than eight seats in addition to the driver’s seat, and having a maximum mass not exceeding 5 tonnes (class M2).</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="moped">
-        <xs:annotation>
-          <xs:documentation>Moped (a two wheeled motor vehicle characterized by a small engine typically less than 50cc and by normally having pedals).</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="motorcycle">
-        <xs:annotation>
-          <xs:documentation>Motorcycle.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="motorcycleWithSideCar">
-        <xs:annotation>
-          <xs:documentation>Three wheeled vehicle comprising a motorcycle with an attached side car.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="motorhome">
-        <xs:annotation>
-          <xs:documentation>Motorhome</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="motorscooter">
-        <xs:annotation>
-          <xs:documentation>Motorscooter (a two wheeled motor vehicle characterized by a step-through frame and small diameter wheels).</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="passengerCar">
-        <xs:annotation>
-          <xs:documentation>Passenger car</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="smallCar">
-        <xs:annotation>
-          <xs:documentation>Small car</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="tanker">
-        <xs:annotation>
-          <xs:documentation>Vehicle with large tank for carrying bulk liquids.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="threeWheeledVehicle">
-        <xs:annotation>
-          <xs:documentation>Three wheeled vehicle of unspecified type.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="trailer">
-        <xs:annotation>
-          <xs:documentation>Trailer.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="tram">
-        <xs:annotation>
-          <xs:documentation>Tram.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="trolleyBus">
-        <xs:annotation>
-          <xs:documentation>Trolley bus</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="twoWheeledVehicle">
-        <xs:annotation>
-          <xs:documentation>Two wheeled vehicle of unspecified type.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="van">
-        <xs:annotation>
-          <xs:documentation>Van.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="vehicleWithCaravan">
-        <xs:annotation>
-          <xs:documentation>Vehicle (of unspecified type) towing a caravan.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="vehicleWithCatalyticConverter">
-        <xs:annotation>
-          <xs:documentation>Vehicle with catalytic converter.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="vehicleWithoutCatalyticConverter">
-        <xs:annotation>
-          <xs:documentation>Vehicle without catalytic converter.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="vehicleWithTrailer">
-        <xs:annotation>
-          <xs:documentation>Vehicle (of unspecified type) towing a trailer.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="withEvenNumberedRegistrationPlates">
-        <xs:annotation>
-          <xs:documentation>Vehicle with even numbered registration plate.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="withOddNumberedRegistrationPlates">
-        <xs:annotation>
-          <xs:documentation>Vehicle with odd numbered registration plate.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="unknown">
-        <xs:annotation>
-          <xs:documentation>Unknown.</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="other">
-        <xs:annotation>
-          <xs:documentation>Other than as defined in this enumeration.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="_extended" />
