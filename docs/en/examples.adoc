@@ -1,4 +1,66 @@
 == Examples
 
-// Sample excerpts via tags – in the sample: <!-- tag::location[] --> … <!-- end::location[] -->
-Samples are part of the specification package `{schema-uri}.zip`.
+Samples are part of the specification package `{schema-uri}.zip` (directory `samples`).
+
+=== fcd-all-lorry-car-sample.xml – segment with a separated traffic flow
+
+The publication contains information for one segment with a separated traffic flow: seven
+`physicalQuantity` elements – traffic status for all vehicles and speed and travel time for all vehicles,
+cars and lorries.
+
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample.xml[tags=**]
+----
+
+Envelope and header::
+Root `d2:payload` of type `roa:ElaboratedDataPublication` with the attributes `profileName`,
+`profileVersion` and the extension identification `extensionName`, `extensionVersion`; `feedType` refers
+to the data source; publication period 300 s (`periodDefault`), calculation time `timeDefault`.
+
+Traffic status::
+For all vehicles the speed is 38 km/h at a free-flow speed of 50 km/h (76 %), hence the status is
+`freeFlow`. The NDIC extension gives the level of traffic `level2` according to the speed ratio and a queue
+148 m long from 40 % to 90 % of the segment length. Lorries travel at 18 km/h, cars at 58 km/h.
+
+Travel time::
+For all vehicles 549 s compared with 259 s in free flow, hence a delay `travelTimeDelay` of 290 s.
+
+Quality and number of vehicles::
+Attributes `supplierCalculatedDataQuality` (in per cent) and `numberOfInputValuesUsed` (number of floating
+vehicles, `9999` for statistical values) on each value.
+
+Location::
+All values refer to the predefined location `6D476A44-AA44-4947-AA4B-7C4DD79BB67E` version 0.
+
+=== fcd-all-lorry-car-sample-no-data.xml – segment without current data
+
+No current data are available for the same segment: the publication contains only three `physicalQuantity`
+elements of type `TravelTimeData` with the free-flow travel time and speed.
+
+[source,xml]
+----
+include::{samplesdir}/fcd-all-lorry-car-sample-no-data.xml[tags=**]
+----
+
+=== fcd-congestion.xml – segment with a queue
+
+Real data of 30 September 2026: segment `TS02125T15781` with a queue at night. The publication contains five
+`physicalQuantity` elements – traffic status for all vehicles, speed for all vehicles and cars and travel
+time for all vehicles; for cars only the free-flow speed.
+
+[source,xml]
+----
+include::{samplesdir}/fcd-congestion.xml[tags=**]
+----
+
+Traffic status::
+A speed of 13 km/h at a free-flow speed of 90 km/h (14 %) corresponds to the status `queuing` and the level
+of traffic `level5`. The queue is 1,784 m long and lies from 10.56 % to 59.01 % of the segment length.
+
+Travel time::
+916 s compared with 133 s in free flow, delay `travelTimeDelay` 783 s.
+
+Location::
+The values refer to the predefined location `TS02125T15781` version `260601` from the FCD location set; the
+provider's own segment identifier (`source`) is not given because it is identical.

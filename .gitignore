@@ -1,1 +1,27 @@
+# výstupy sestavení dokumentace (d2doc build)
 build/
+dist/
+
+# interní dokumenty – nikdy do veřejného repozitáře (sestavují se z docs/<jazyk>/internal mimo publikaci)
+docs/*/internal/
+docs/*/fsp.adoc
+
+# Python, editory, systém
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Office: zámky a dočasné soubory
+~$*
+*.tmp
+*.bak
+
+# odložené ke smazání (mazání ve složkách je vypnuto)
+_to_delete/

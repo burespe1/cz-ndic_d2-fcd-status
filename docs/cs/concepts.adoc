@@ -2,11 +2,12 @@
 
 Formát poskytuje stavové informace o dopravě získané z plovoucích vozidel (FCD) na sadě předem
 definovaných úseků silniční sítě (segmentů): dojezdové doby, rychlost dopravního proudu, stav provozu
-a stupně provozu, odhad délky a polohy kolon. Informace se poskytují souhrnně pro všechna vozidla
-a odděleně pro osobní a nákladní automobily.
+a stupně provozu, odhad délky a polohy kolon. Rychlosti a dojezdové doby se poskytují souhrnně pro všechna
+vozidla a odděleně pro osobní a nákladní automobily; stav provozu, stupeň provozu a kolony jen pro všechna
+vozidla.
 
 Formát vychází z DATEX II publikace `ElaboratedDataPublication` <<EN16157-5>>. Stupně provozu podle
-zvyklostí v ČR, kolony a typ vozidla u stavu provozu doplňuje *rozšíření NDIC* (rozšíření úrovně B
+zvyklostí v ČR a kolony doplňuje *rozšíření NDIC* (rozšíření úrovně B
 podle <<EN16157-1>>). Používá model DATEX II 3.7; kvalitu dat a počet vozidel nesou nativní atributy modelu.
 
 [[obalka]]
@@ -56,15 +57,16 @@ identifikátor segmentu u poskytovatele (`source`) a vlastní hodnotu `basicData
 [cols="2,4",options="header"]
 |===
 |Typ `basicData` |Obsah
-|`TrafficStatus` |stav provozu (`trafficStatus`) a v rozšíření NDIC typ vozidla, stupeň provozu a kolony
+|`TrafficStatus` |stav provozu (`trafficStatus`) a v rozšíření NDIC stupeň provozu a kolony – jen pro všechna vozidla
 |`TrafficSpeed` |aktuální průměrná rychlost dopravního proudu (`averageVehicleSpeed`) [km/h]
 |`TravelTimeData` |aktuální dojezdová doba (`travelTime`), dojezdová doba při volném provozu
 (`freeFlowTravelTime`), zpoždění (`travelTimeDelay`) [s] a rychlost volného provozu (`freeFlowSpeed`) [km/h]
 |===
 
-Pro jeden segment a jeden typ vozidla jsou tedy tři elementy `physicalQuantity`. Na segmentech, kde se
-stav vyhodnocuje odděleně podle typu vozidla, je jich až devět (3× `anyVehicle`, 3× `car`, 3× `lorry`),
-podle toho, zda se daný typ vozidel na segmentu v době vyhodnocení vyskytoval. Element `physicalQuantity`
+Pro segment se sdruženým dopravním proudem jsou tedy tři elementy `physicalQuantity`. Na segmentech, kde se
+rychlost a dojezdová doba vyhodnocují odděleně podle typu vozidla, je jich až sedm (stav provozu pro všechna
+vozidla, rychlost a dojezdová doba pro `anyVehicle`, `car` a `lorry`), podle toho, zda se daný typ vozidel
+na segmentu v době vyhodnocení vyskytoval. Element `physicalQuantity`
 nemá vlastní identifikátor; jednoznačně jej určuje čas publikace, odkazovaná poloha, typ `basicData`
 a typ vozidla.
 
@@ -73,10 +75,10 @@ a typ vozidla.
 
 Segmenty se *sdruženým dopravním proudem* (vozidla jedou smíšeně, např. v jednom pruhu) mají jen
 informace pro všechna vozidla (`anyVehicle`). Segmenty s *odděleným dopravním proudem* (více pruhů, kde
-mohou vznikat kolony podle typu vozidel) mají navíc informace pro osobní (`car`) a nákladní (`lorry`)
-automobily. Typ vozidla se uvádí:
+se rychlosti osobních a nákladních automobilů liší) mají navíc rychlost a dojezdovou dobu pro osobní
+(`car`) a nákladní (`lorry`) automobily. Stav provozu, stupeň provozu a kolony se uvádějí jen pro všechna
+vozidla (`TrafficStatus` typ vozidla neuvádí). Typ vozidla se uvádí:
 
-* u `TrafficStatus` v rozšíření NDIC (`ndic:vehicleType`),
 * u `TrafficSpeed` v `forVehiclesWithCharacteristicsOf/vehicleType`,
 * u `TravelTimeData` přímo v `vehicleType`.
 
@@ -162,38 +164,35 @@ jako pokles rychlosti průjezdu úseku *pod 30 % rychlosti volného průjezdu*. 
 vyhodnocena; nebyla-li vyhodnocena na žádném úseku, element chybí. Na segment je nejvýše jeden.
 
 .Agregace jednotlivých kongescí na segmentu
-image::kongesce.png[Agregace kongescí na segmentu,width=600,align="center"]
+image::kongesce.svg[Agregace kongescí na segmentu,width=680,align="center"]
 
 * `ndic:queueLength` – součet délek úseků segmentu (i nenavazujících), na kterých byla detekována
   kongesce [m].
 * `ndic:fromPoint`, `ndic:toPoint` (nepovinné) – začátek a konec kolony jako vzdálenost od počátku
-  segmentu ve směru provozu v procentech délky segmentu (0–100). Kolona začíná (`fromPoint`) v místě,
+  segmentu ve směru provozu v procentech délky segmentu (0–100, nejvýše dvě desetinná místa). Kolona začíná (`fromPoint`) v místě,
   kde do ní vozidla vjíždějí, a končí (`toPoint`) v místě, kde ji opouštějí. Je-li na segmentu více
   oddělených kongescí, `fromPoint` popisuje začátek první z nich a `toPoint` je dopočten z `queueLength`.
 
 .Poloha kolony na segmentu
-image::queue_position.png[Poloha kolony na segmentu,width=650,align="center"]
+image::poloha-kolony.svg[Poloha kolony na segmentu,width=680,align="center"]
 
-.Rozšíření NDIC u stavu provozu (vzorek `fcd-all-lorry-car-sample.xml`)
+.Stav provozu s kolonou (vzorek `fcd-congestion.xml`)
 [source,xml]
 ----
-include::{samplesdir}/fcd-all-lorry-car-sample.xml[tag=ext,indent=0]
+include::{samplesdir}/fcd-congestion.xml[tag=status,indent=0]
 ----
 
 [[rozsireni]]
 ==== Struktura rozšíření NDIC
 
 Rozšíření je v samostatném jmenném prostoru `http://ndic.cz/datex2/fcd/extension/1.0` (prefix `ndic`)
-a vkládá se do rozšiřujícího bodu `_trafficStatusExtension` třídy `TrafficStatus`. Schéma rozšíření je
-součástí balíčku specifikace.
-
-.Struktura rozšíření NDIC
-image::NdicFcdExtension.png[Struktura rozšíření NDIC,width=650,align="center"]
+a vkládá se do rozšiřujícího bodu `_trafficStatusExtension` třídy `TrafficStatus`; vztahuje se ke všem
+vozidlům. Schéma rozšíření `cz-ndic_d2-fcd-extension-1.0.xsd` je součástí balíčku specifikace (adresář
+`schema`) a zprávy se validují i proti němu.
 
 [cols="2,1,4",options="header"]
 |===
 |Element |Kard. |Obsah
-|`ndicFcdExtension/vehicleType` |1..1 |typ vozidla, ke kterému se stav vztahuje (`anyVehicle`, `car`, `lorry`)
 |`ndicFcdExtension/trafficLevel/trafficLevelValue` |0..1 |stupeň provozu `level1`–`level5`
 |`ndicFcdExtension/queueInformation/queue` |0..1 / 1..n |kolona na segmentu
 |`queue/queueLength` |1..1 |celková délka kongescí na segmentu [m]
@@ -207,7 +206,7 @@ image::NdicFcdExtension.png[Struktura rozšíření NDIC,width=650,align="center
 Nejsou-li pro segment k dispozici data pro výpočet aktuálního stavu, přenášejí se k němu pouze
 informace při volném provozu (`TravelTimeData` s `freeFlowTravelTime` a `freeFlowSpeed`); elementy
 s aktuální rychlostí, stavem a dojezdovou dobou se vynechají. Segment s aktuálními daty tak pokrývá
-až devět elementů `physicalQuantity`, segment bez nich jen tři (viz vzorek
+až sedm elementů `physicalQuantity`, segment bez nich jen tři (viz vzorek
 `fcd-all-lorry-car-sample-no-data.xml`).
 
 [[platnost]]

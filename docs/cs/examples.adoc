@@ -4,9 +4,9 @@ Vzorky jsou součástí balíčku specifikace `{schema-uri}.zip` (adresář `sam
 
 === fcd-all-lorry-car-sample.xml – segment s odděleným dopravním proudem
 
-Publikace obsahuje informace pro jeden segment s odděleným dopravním proudem: devět elementů
-`physicalQuantity` – stav provozu, rychlost a dojezdovou dobu, vždy pro všechna vozidla, osobní
-a nákladní automobily.
+Publikace obsahuje informace pro jeden segment s odděleným dopravním proudem: sedm elementů
+`physicalQuantity` – stav provozu pro všechna vozidla a rychlost a dojezdovou dobu pro všechna vozidla,
+osobní a nákladní automobily.
 
 [source,xml]
 ----
@@ -20,9 +20,8 @@ a identifikací rozšíření `extensionName`, `extensionVersion`, `feedType` od
 
 Stav provozu::
 Pro všechna vozidla je rychlost 38 km/h při rychlosti volného provozu 50 km/h (76 %), stav je tedy
-`freeFlow`; pro nákladní automobily 18 km/h z 50 km/h (36 %), stav `slow`. Rozšíření NDIC uvádí stupeň
-provozu podle poměru rychlostí – `level2` pro všechna vozidla (76 %), `level1` pro osobní (58 z 55 km/h)
-a `level4` pro nákladní automobily (36 %) – a kolonu dlouhou 148 m od 40 % do 90 % délky segmentu.
+`freeFlow`. Rozšíření NDIC uvádí stupeň provozu podle poměru rychlostí `level2` a kolonu dlouhou 148 m
+od 40 % do 90 % délky segmentu. Nákladní automobily jedou 18 km/h, osobní 58 km/h.
 
 Dojezdová doba::
 Pro všechna vozidla 549 s oproti 259 s při volném provozu, zpoždění `travelTimeDelay` tedy 290 s.
@@ -43,3 +42,25 @@ Pro tentýž segment nejsou k dispozici aktuální data: publikace obsahuje jen 
 ----
 include::{samplesdir}/fcd-all-lorry-car-sample-no-data.xml[tags=**]
 ----
+
+=== fcd-congestion.xml – segment s kolonou
+
+Skutečná data z 30. 9. 2026: segment `TS02125T15781` s kolonou v noci. Publikace obsahuje pět elementů
+`physicalQuantity` – stav provozu pro všechna vozidla, rychlost pro všechna vozidla a osobní automobily
+a dojezdovou dobu pro všechna vozidla; pro osobní automobily jen rychlost volného provozu.
+
+[source,xml]
+----
+include::{samplesdir}/fcd-congestion.xml[tags=**]
+----
+
+Stav provozu::
+Rychlost 13 km/h při rychlosti volného provozu 90 km/h (14 %) odpovídá stavu `queuing` a stupni provozu
+`level5`. Kolona je dlouhá 1 784 m a leží od 10,56 % do 59,01 % délky segmentu.
+
+Dojezdová doba::
+916 s oproti 133 s při volném provozu, zpoždění `travelTimeDelay` 783 s.
+
+Poloha::
+Hodnoty odkazují na předdefinovanou polohu `TS02125T15781` verze `260601` ze sady poloh FCD; vlastní
+identifikátor segmentu (`source`) se neuvádí, protože je shodný.

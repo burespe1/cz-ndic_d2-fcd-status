@@ -19,6 +19,8 @@ model:
 schema:
   dir: schema
   entry: DATEXII_3_D2Payload.xsd
+  extensions:
+  - cz-ndic_d2-fcd-extension-1.0.xsd
 selection: sel/cz-ndic_d2-fcd-status.sel
 samples: samples
 ndic:

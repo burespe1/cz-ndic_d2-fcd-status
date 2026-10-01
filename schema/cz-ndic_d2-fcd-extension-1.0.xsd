@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  NDIC extension of cz-ndic_d2-fcd-status (DATEX II 3.7), placed in roa:TrafficStatus/roa:_trafficStatusExtension.
+  Hand-written schema, to be replaced by a modelled (level B) extension.
+  extensionName="cz-ndic_d2-fcd-extension" extensionVersion="1.0"
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:com="http://datex2.eu/schema/3/common"
+           xmlns:ndic="http://ndic.cz/datex2/fcd/extension/1.0"
+           targetNamespace="http://ndic.cz/datex2/fcd/extension/1.0"
+           elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+  <xs:import namespace="http://datex2.eu/schema/3/common" schemaLocation="DATEXII_3_Common.xsd" />
+
+  <xs:element name="ndicFcdExtension" type="ndic:NdicFcdExtension" />
+
+  <xs:complexType name="NdicFcdExtension">
+    <xs:annotation>
+      <xs:documentation>NDIC extension of the traffic status of a predefined segment: national level of traffic and queues. Applies to all vehicles.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="trafficLevel" type="ndic:TrafficLevel" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Level of traffic on the segment according to the national classification.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="queueInformation" type="ndic:QueueInformation" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Queues (congestion) detected on the segment.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TrafficLevel">
+    <xs:annotation>
+      <xs:documentation>Level of traffic according to the national classification, derived from the ratio of the current speed to the free-flow speed on the segment.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="trafficLevelValue" type="ndic:TrafficLevelEnum" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Level of traffic (level1 to level5).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="TrafficLevelEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="level1">
+        <xs:annotation><xs:documentation>Individual vehicles only, free flow (speed ratio 85–100 %).</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="level2">
+        <xs:annotation><xs:documentation>Small groups of vehicles, free flow (speed ratio 75–85 %).</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="level3">
+        <xs:annotation><xs:documentation>Streams of vehicles, flow still smooth, speed below the limit (speed ratio 50–75 %).</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="level4">
+        <xs:annotation><xs:documentation>Queues forming, unstable flow, markedly reduced speed (speed ratio 20–50 %).</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="level5">
+        <xs:annotation><xs:documentation>Traffic breakdown, vehicles stationary or moving very slowly in queues (speed ratio 0–20 %).</xs:documentation></xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="QueueInformation">
+    <xs:annotation>
+      <xs:documentation>Queues on the segment.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="queue" type="ndic:Queue" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A queue on the segment.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Queue">
+    <xs:annotation>
+      <xs:documentation>Queue on the segment: parts of the segment where the travel speed drops below 30 % of the free-flow speed.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="queueLength" type="com:NonNegativeInteger" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Total length of the queued parts of the segment, in metres.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="fromPoint" type="ndic:PercentageOfSegment" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Start of the queued part of the segment, as a percentage of the segment length measured from the start of the segment in the direction of travel.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="toPoint" type="ndic:PercentageOfSegment" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>End of the queued part of the segment, as a percentage of the segment length measured from the start of the segment in the direction of travel.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="PercentageOfSegment">
+    <xs:annotation>
+      <xs:documentation>Percentage of the segment length, 0 to 100.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="com:Percentage">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

@@ -37,7 +37,6 @@
       <!-- tag::ext[] -->
       <roa:_trafficStatusExtension>
         <ndic:ndicFcdExtension>
-          <ndic:vehicleType>anyVehicle</ndic:vehicleType>
           <ndic:trafficLevel>
             <ndic:trafficLevelValue>level2</ndic:trafficLevelValue>
           </ndic:trafficLevel>
@@ -51,62 +50,6 @@
         </ndic:ndicFcdExtension>
       </roa:_trafficStatusExtension>
       <!-- end::ext[] -->
-    </roa:basicData>
-  </roa:physicalQuantity>
-  <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
-    <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="6D476A44-AA44-4947-AA4B-7C4DD79BB67E" version="0" targetClass="loc:PredefinedLocation"/>
-    </roa:pertinentLocation>
-    <roa:basicData xsi:type="roa:TrafficStatus">
-      <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
-      </roa:measurementOrCalculationTime>
-      <roa:trafficStatus numberOfInputValuesUsed="5" supplierCalculatedDataQuality="85">
-        <roa:trafficStatusValue>freeFlow</roa:trafficStatusValue>
-      </roa:trafficStatus>
-      <roa:_trafficStatusExtension>
-        <ndic:ndicFcdExtension>
-          <ndic:vehicleType>car</ndic:vehicleType>
-          <ndic:trafficLevel>
-            <ndic:trafficLevelValue>level1</ndic:trafficLevelValue>
-          </ndic:trafficLevel>
-          <ndic:queueInformation>
-            <ndic:queue>
-              <ndic:queueLength>89</ndic:queueLength>
-              <ndic:fromPoint>60</ndic:fromPoint>
-              <ndic:toPoint>90</ndic:toPoint>
-            </ndic:queue>
-          </ndic:queueInformation>
-        </ndic:ndicFcdExtension>
-      </roa:_trafficStatusExtension>
-    </roa:basicData>
-  </roa:physicalQuantity>
-  <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">
-    <roa:pertinentLocation xsi:type="loc:LocationByReference">
-      <loc:predefinedLocationReference id="6D476A44-AA44-4947-AA4B-7C4DD79BB67E" version="0" targetClass="loc:PredefinedLocation"/>
-    </roa:pertinentLocation>
-    <roa:basicData xsi:type="roa:TrafficStatus">
-      <roa:measurementOrCalculationTime>
-        <roa:timeValue>2022-12-17T23:57:35+01:00</roa:timeValue>
-      </roa:measurementOrCalculationTime>
-      <roa:trafficStatus numberOfInputValuesUsed="4" supplierCalculatedDataQuality="75">
-        <roa:trafficStatusValue>slow</roa:trafficStatusValue>
-      </roa:trafficStatus>
-      <roa:_trafficStatusExtension>
-        <ndic:ndicFcdExtension>
-          <ndic:vehicleType>lorry</ndic:vehicleType>
-          <ndic:trafficLevel>
-            <ndic:trafficLevelValue>level4</ndic:trafficLevelValue>
-          </ndic:trafficLevel>
-          <ndic:queueInformation>
-            <ndic:queue>
-              <ndic:queueLength>148</ndic:queueLength>
-              <ndic:fromPoint>40</ndic:fromPoint>
-              <ndic:toPoint>90</ndic:toPoint>
-            </ndic:queue>
-          </ndic:queueInformation>
-        </ndic:ndicFcdExtension>
-      </roa:_trafficStatusExtension>
     </roa:basicData>
   </roa:physicalQuantity>
   <roa:physicalQuantity xsi:type="roa:SinglePhysicalQuantity">

@@ -12,7 +12,7 @@ toc::[]
 
 [horizontal]
 `FORMAT.yaml`:: metadata formátu (verze MAJOR.MINOR)
-`schema/`:: závazné XML schéma (XSD)
+`schema/`:: závazné XML schéma (XSD) včetně schématu rozšíření NDIC `cz-ndic_d2-fcd-extension-1.0.xsd`
 `sel/`:: výběr profilu z modelu DATEX II (webtool DATEX II)
 `samples/`:: vzorky dat, validní vůči schématu
 `CHANGELOG.adoc`:: změny formátu
