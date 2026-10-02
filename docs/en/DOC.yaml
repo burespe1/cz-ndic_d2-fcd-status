@@ -1,0 +1,9 @@
+# Metadata jazykové varianty dokumentace (en). Verze = <FORMAT.yaml version>.<revision> (tag docs-en-vX.Y.N)
+format: ../../FORMAT.yaml
+revision: 0
+date: '2026-09-28'
+author:
+  name: Petr Bureš
+  company: TamTam Research s.r.o.
+perex: 'This document describes the data format used to provide traffic status information obtained from floating car data (FCD) on a set of predefined road network sections: travel times and traffic speeds including free-flow values, traffic status and level, and the estimated length and position of queues. Speeds are given for all vehicles and separately for cars and lorries; travel times, traffic status, level and queues for all vehicles; values carry their quality and the number of vehicles in the sample. Sections are identified by a reference to the location set of the format cz-ndic_d2-pls. The format is based on the ElaboratedDataPublication of the DATEX II 3.7 model; traffic levels and queues are added by the NDIC extension.'
+keywords: DATEX II, NDIC, ElaboratedDataPublication

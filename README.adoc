@@ -11,12 +11,12 @@ toc::[]
 == Obsah
 
 [horizontal]
-`FORMAT.yaml`:: metadata formátu (verze MAJOR.MINOR)
+`FORMAT.yaml`:: metadata formátu: identifikátor `x-format:<formát>-vX.Y`, verze MAJOR.MINOR
 `schema/`:: závazné XML schéma (XSD) včetně schématu rozšíření NDIC `cz-ndic_d2-fcd-extension-1.0.xsd`
 `sel/`:: výběr profilu z modelu DATEX II (webtool DATEX II)
 `samples/`:: vzorky dat, validní vůči schématu
 `CHANGELOG.adoc`:: změny formátu
-`docs/`:: zdrojové texty dokumentace (AsciiDoc)
+`docs/`:: zdrojové texty dokumentace (AsciiDoc); každá jazyková varianta (`docs/cs`, `docs/en`) má vlastní `DOC.yaml` s revizí
 
 == Vydání
 
@@ -27,7 +27,7 @@ Vydání jsou v sekci *Releases* tohoto repozitáře:
 |tag |obsah
 
 |`vX.Y` |balíček specifikace `cz-ndic_d2-fcd-status-vX.Y.zip` (FORMAT.yaml, schéma, výběr profilu, vzorky, doplňkové materiály, CHANGELOG)
-|`docs-vX.Y.N` |dokumentace formátu (PDF, HTML); `X.Y` = verze formátu, `N` = revize textu dokumentace
+|`docs-<jazyk>-vX.Y.N` |dokumentace formátu v jazyce `cs`/`en` (PDF, HTML); `X.Y` = verze formátu, `N` = revize textu dané jazykové varianty
 |===
 
 Registr zdrojů dat a distribucí: https://registr.dopravniinfo.cz/[Národní přístupový bod].

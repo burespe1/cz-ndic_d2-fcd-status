@@ -1,14 +1,14 @@
 # Dokumentace a vydání formátu (samostatný workflow – kit je privátní, sdílený workflow z něj veřejné repo volat nemůže).
 #   push na main       -> kontrola + HTML dokumentace na GitHub Pages (bez PDF, rychlé)
 #   tag vX.Y           -> ZIP specifikace + GitHub Release
-#   tag docs-vX.Y.N    -> HTML + PDF ze specifikace vX.Y + GitHub Release
+#   tag docs-<jazyk>-vX.Y.N -> HTML + PDF jazykové varianty ze specifikace vX.Y + GitHub Release
 # Image docs-kitu se bere z Makefile (IMAGE ?= ...). Image je privátní: v nastavení balíčku
 # ghcr.io/tamtamresearch-d2v3/ndic-docs-kit → Manage Actions access musí mít tento repozitář právo Read.
 name: docs
 on:
   push:
     branches: [main]
-    tags: ['v[0-9]+.[0-9]+', 'docs-v[0-9]+.[0-9]+.[0-9]+']
+    tags: ['v[0-9]+.[0-9]+', 'docs-[a-z][a-z]-v[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
 
 concurrency: { group: 'docs-${{ github.ref }}', cancel-in-progress: true }
@@ -59,7 +59,7 @@ jobs:
           fi
 
   docs:
-    if: ${{ startsWith(github.ref, 'refs/tags/docs-v') }}
+    if: ${{ startsWith(github.ref, 'refs/tags/docs-') }}
     runs-on: ubuntu-latest
     permissions: { contents: write, packages: read }
     steps:
@@ -70,7 +70,7 @@ jobs:
       - name: HTML + PDF
         run: |
           IMAGE=$(sed -nE 's/^IMAGE[[:space:]]*\?=[[:space:]]*(\S+).*/\1/p' Makefile | head -1)
-          SPEC_REF=$(echo "$GITHUB_REF_NAME" | sed -E 's/^docs-(v[0-9]+\.[0-9]+)\.[0-9]+$/\1/')
+          SPEC_REF=$(echo "$GITHUB_REF_NAME" | sed -E 's/^docs-[a-z]{2}-(v[0-9]+\.[0-9]+)\.[0-9]+$/\1/')
           docker run --rm -v $GITHUB_WORKSPACE:/work -w /work -u root $IMAGE sh -c \
             "git config --global --add safe.directory /work && d2doc build . --tag $GITHUB_REF_NAME --spec-ref $SPEC_REF --release --out build"
       - name: GitHub Release
@@ -80,5 +80,5 @@ jobs:
             gh release upload "$GITHUB_REF_NAME" build/dist/*.pdf build/dist/*.html --clobber
           else
             gh release create "$GITHUB_REF_NAME" build/dist/*.pdf build/dist/*.html --title "Dokumentace $GITHUB_REF_NAME" \
-              --notes "Dokumentace formátu (CZ, EN). Změny textu viz kapitola Historie změn dokumentace."
+              --notes "Dokumentace formátu. Změny textu viz kapitola Historie změn dokumentace."
           fi

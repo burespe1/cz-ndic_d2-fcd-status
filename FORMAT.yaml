@@ -1,5 +1,5 @@
 # Metadata formátu – součást vydání specifikace (tag v2.0).
-uri: cz-ndic_d2-fcd-status
+id: x-format:cz-ndic_d2-fcd-status-v2.0
 version: '2.0'
 name:
   cs: DATEX II Elaborated Data Publication – FCD dopravní data
@@ -23,13 +23,6 @@ schema:
   - cz-ndic_d2-fcd-extension-1.0.xsd
 selection: sel/cz-ndic_d2-fcd-status.sel
 samples: samples
-ndic:
-  action: upgrade
-  previous: cz-ndic_d2-fcd-v1.1 (DATEX II 2.3)
-  profiles:
-  - RSP Traffic Condition and Travel Time
-  profileName: cz-ndic_d2-fcd-status
-  profileVersion: '2.0'
 maintainer:
   name: Petr Bureš
   company: TamTam Research s.r.o.

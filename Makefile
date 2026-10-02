@@ -1,5 +1,5 @@
 # Lokální spouštění přes Docker image docs-kitu
-IMAGE ?= ghcr.io/tamtamresearch-d2v3/ndic-docs-kit:0.4.8
+IMAGE ?= ghcr.io/tamtamresearch-d2v3/ndic-docs-kit:0.5.0
 RUN = docker run --rm -v "$(CURDIR):/work" -w /work $(IMAGE)
 
 .PHONY: check tables docs spec
