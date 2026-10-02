@@ -1,6 +1,6 @@
 # Dokumentace a vydání formátu (samostatný workflow – kit je privátní, sdílený workflow z něj veřejné repo volat nemůže).
 #   push na main       -> kontrola + HTML dokumentace na GitHub Pages (bez PDF, rychlé)
-#   tag vX.Y           -> ZIP specifikace + GitHub Release
+#   tag vX.Y           -> ZIP specifikace + GitHub Release (vX.Y-rc.K = kandidát na vydání, prerelease)
 #   tag docs-<jazyk>-vX.Y.N -> HTML + PDF jazykové varianty ze specifikace vX.Y + GitHub Release
 # Image docs-kitu se bere z Makefile (IMAGE ?= ...). Image je privátní: v nastavení balíčku
 # ghcr.io/tamtamresearch-d2v3/ndic-docs-kit → Manage Actions access musí mít tento repozitář právo Read.
@@ -8,7 +8,7 @@ name: docs
 on:
   push:
     branches: [main]
-    tags: ['v[0-9]+.[0-9]+', 'docs-[a-z][a-z]-v[0-9]+.[0-9]+.[0-9]+']
+    tags: ['v[0-9]+.[0-9]+', 'v[0-9]+.[0-9]+-rc.[0-9]+', 'docs-[a-z][a-z]-v[0-9]+.[0-9]+.[0-9]+', 'docs-[a-z][a-z]-v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+']
   workflow_dispatch:
 
 concurrency: { group: 'docs-${{ github.ref }}', cancel-in-progress: true }
@@ -51,10 +51,11 @@ jobs:
       - name: GitHub Release
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
         run: |
+          PRE=""; case "$GITHUB_REF_NAME" in *-rc.*) PRE="--prerelease";; esac   # kandidát na vydání
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
             gh release upload "$GITHUB_REF_NAME" build/dist/*.zip --clobber
           else
-            gh release create "$GITHUB_REF_NAME" build/dist/*.zip --title "Specifikace $GITHUB_REF_NAME" \
+            gh release create "$GITHUB_REF_NAME" build/dist/*.zip $PRE --title "Specifikace $GITHUB_REF_NAME" \
               --notes "Balíček specifikace formátu (FORMAT.yaml, XSD, výběr profilu, vzorky, doplňkové materiály). Změny viz CHANGELOG.adoc."
           fi
 
@@ -70,15 +71,16 @@ jobs:
       - name: HTML + PDF
         run: |
           IMAGE=$(sed -nE 's/^IMAGE[[:space:]]*\?=[[:space:]]*(\S+).*/\1/p' Makefile | head -1)
-          SPEC_REF=$(echo "$GITHUB_REF_NAME" | sed -E 's/^docs-[a-z]{2}-(v[0-9]+\.[0-9]+)\.[0-9]+$/\1/')
+          SPEC_REF=$(echo "$GITHUB_REF_NAME" | sed -E 's/^docs-[a-z]{2}-(v[0-9]+\.[0-9]+)\.[0-9]+(-rc\.[0-9]+)?$/\1\2/')
           docker run --rm -v $GITHUB_WORKSPACE:/work -w /work -u root $IMAGE sh -c \
             "git config --global --add safe.directory /work && d2doc build . --tag $GITHUB_REF_NAME --spec-ref $SPEC_REF --release --out build"
       - name: GitHub Release
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
         run: |
+          PRE=""; case "$GITHUB_REF_NAME" in *-rc.*) PRE="--prerelease";; esac   # kandidát na vydání
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
             gh release upload "$GITHUB_REF_NAME" build/dist/*.pdf build/dist/*.html --clobber
           else
-            gh release create "$GITHUB_REF_NAME" build/dist/*.pdf build/dist/*.html --title "Dokumentace $GITHUB_REF_NAME" \
+            gh release create "$GITHUB_REF_NAME" build/dist/*.pdf build/dist/*.html $PRE --title "Dokumentace $GITHUB_REF_NAME" \
               --notes "Dokumentace formátu. Změny textu viz kapitola Historie změn dokumentace."
           fi
