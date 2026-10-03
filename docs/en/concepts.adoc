@@ -31,8 +31,10 @@ The publication header contains:
 ** the format of the message is identified by the `@profileName` and `@profileVersion` attributes, not by
    `feedType`,
 ** the `feedDescription` element is not used.
-* `publicationTime` – time the publication content was created; if the content has not changed since the
-  previous publication, the original time is kept; a new time is set only when the content changes.
+* `publicationTime` – time the publication was generated; the publication is issued periodically and every
+  generated publication (in every period) has a new time, even if the values have not changed. If a file is
+  made available outside the update period (assembled from previous values without a change of content),
+  `publicationTime` does not change; only the time the file was made available changes.
 * `publicationCreator` – publisher:
 ** country code in lower case (`cz`),
 ** the publisher's abbreviation (`nationalIdentifier`), always `NDIC`.
