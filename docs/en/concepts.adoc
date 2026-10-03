@@ -14,7 +14,7 @@ native attributes of the model.
 [[obalka]]
 === Envelope and publication header
 
-Each message is a DATEX II 3 document with the root element `d2:payload`. The `xsi:type` attribute of the
+Each message is a DATEX II 3 document with the root element `d2:payload`. The `@xsi:type` attribute of the
 root element determines the publication type (here `roa:ElaboratedDataPublication`), the attribute
 `modelBaseVersion="3"` the model version and the attribute `@lang` the default language of texts.
 
