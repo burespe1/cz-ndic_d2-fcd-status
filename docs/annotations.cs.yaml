@@ -40,6 +40,6 @@ QueueInformation:
   queue: Kolona na segmentu; v praxi jedna.
 Queue:
   _: Kolona na segmentu – délka a poloha vůči počátku segmentu ve směru provozu.
-  queueLength: Celková délka kongescí na segmentu v metrech.
-  fromPoint: Začátek kolony jako vzdálenost od počátku segmentu v procentech jeho délky (0–100).
-  toPoint: Konec kolony jako vzdálenost od počátku segmentu v procentech jeho délky (0–100).
+  queueLength: Celková délka kongescí na segmentu v metrech; může se lišit od délky mezi `fromPoint` a `toPoint` (na segmentu může být více kongescí).
+  fromPoint: Konec kolony (místo, kam vozidla přijíždějí) jako vzdálenost od počátku segmentu ve směru jízdy v procentech jeho délky (0–100).
+  toPoint: Čelo kolony jako vzdálenost od počátku segmentu ve směru jízdy v procentech jeho délky (0–100).
