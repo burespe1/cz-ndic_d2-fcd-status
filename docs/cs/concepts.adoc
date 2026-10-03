@@ -2,9 +2,9 @@
 
 Formát poskytuje stavové informace o dopravě získané z plovoucích vozidel (FCD) na sadě předem
 definovaných úseků silniční sítě (segmentů): dojezdové doby, rychlost dopravního proudu, stav provozu
-a stupně provozu, odhad délky a polohy kolon. Rychlosti se poskytují souhrnně pro všechna vozidla
-a odděleně pro osobní a nákladní automobily; dojezdové doby, stav provozu, stupeň provozu a kolony jen pro
-všechna vozidla.
+a stupně provozu, odhad délky a polohy kolon. Rychlosti a dojezdové doby se poskytují souhrnně pro všechna
+vozidla a odděleně pro osobní a nákladní automobily; stav provozu, stupeň provozu a kolony jen pro všechna
+vozidla.
 
 Formát vychází z DATEX II publikace `roa:ElaboratedDataPublication` <<EN16157-5>>. Stupně provozu podle
 zvyklostí v ČR a kolony doplňuje *rozšíření NDIC* (zpětně kompatibilní rozšíření vložené do rozšiřujícího bodu
@@ -81,10 +81,10 @@ Rozsah informací podle segmentu:
 * Segmenty s *odděleným dopravním proudem* (více pruhů, kde se rychlosti osobních a nákladních automobilů
   liší) mají navíc pro osobní (`car`) a nákladní (`lorry`) automobily:
 ** aktuální rychlost (`roa:TrafficSpeed`),
-** rychlost volného provozu (`roa:TravelTimeData` jen s `freeFlowSpeed`).
-* Jen pro všechna vozidla se uvádějí:
-** dojezdová doba, dojezdová doba při volném provozu a zpoždění,
-** stav provozu, stupeň provozu a kolony (`roa:TrafficStatus` typ vozidla neuvádí).
+** dojezdovou dobu, dojezdovou dobu při volném provozu, zpoždění a rychlost volného provozu
+   (`roa:TravelTimeData`); dojezdové doby se pro osobní a nákladní automobily liší.
+* Jen pro všechna vozidla se uvádějí stav provozu, stupeň provozu a kolony (`roa:TrafficStatus` typ vozidla
+  neuvádí).
 
 Typ vozidla se uvádí:
 

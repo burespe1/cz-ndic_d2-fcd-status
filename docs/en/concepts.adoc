@@ -2,8 +2,8 @@
 
 The format provides traffic state information obtained from floating car data (FCD) on a set of predefined
 sections of the road network (segments): travel times, traffic speed, traffic status and level of traffic,
-and an estimate of the length and position of queues. Speeds are provided for all vehicles together and
-separately for cars and lorries; travel times, traffic status, level of traffic and queues for all vehicles
+and an estimate of the length and position of queues. Speeds and travel times are provided for all vehicles
+together and separately for cars and lorries; traffic status, level of traffic and queues for all vehicles
 only.
 
 The format is based on the DATEX II `roa:ElaboratedDataPublication` <<EN16157-5>>. Levels of traffic as used
@@ -83,10 +83,10 @@ Scope of information by segment:
 * Segments with a *separated traffic flow* (several lanes where speeds of cars and lorries differ)
   additionally carry for cars (`car`) and lorries (`lorry`):
 ** the current speed (`roa:TrafficSpeed`),
-** the free-flow speed (`roa:TravelTimeData` with `freeFlowSpeed` only).
-* For all vehicles only:
-** travel time, free-flow travel time and delay,
-** traffic status, level of traffic and queues (`roa:TrafficStatus` states no vehicle type).
+** the travel time, free-flow travel time, delay and free-flow speed (`roa:TravelTimeData`); travel times
+   of cars and lorries differ.
+* Traffic status, level of traffic and queues are given for all vehicles only (`roa:TrafficStatus` states no
+  vehicle type).
 
 The vehicle type is given:
 
