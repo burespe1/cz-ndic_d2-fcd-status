@@ -33,7 +33,7 @@ Hlavička publikace obsahuje:
   čas původní; nový čas vzniká jen se změnou obsahu.
 * `publicationCreator` – poskytovatel publikace:
 ** kód země malými písmeny (`cz`),
-** zkratka poskytovatele (`nationalIdentifier`).
+** zkratka poskytovatele (`nationalIdentifier`), vždy `NDIC`.
 * `headerInformation` – způsob nakládání s informacemi; NDIC uvádí vždy:
 ** `confidentiality` = `noRestriction`,
 ** `informationStatus` = `real`.

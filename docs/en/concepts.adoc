@@ -35,7 +35,7 @@ The publication header contains:
   previous publication, the original time is kept; a new time is set only when the content changes.
 * `publicationCreator` – publisher:
 ** country code in lower case (`cz`),
-** the publisher's abbreviation (`nationalIdentifier`).
+** the publisher's abbreviation (`nationalIdentifier`), always `NDIC`.
 * `headerInformation` – handling of the information; NDIC always states:
 ** `confidentiality` = `noRestriction`,
 ** `informationStatus` = `real`.
