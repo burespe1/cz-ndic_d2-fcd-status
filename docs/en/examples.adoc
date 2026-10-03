@@ -1,4 +1,4 @@
-== Examples
+== Message examples
 
 Samples are part of the specification package `{schema-uri}.zip` (directory `samples`).
 
