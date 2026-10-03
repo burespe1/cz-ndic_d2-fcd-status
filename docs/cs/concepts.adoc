@@ -7,8 +7,8 @@ a odděleně pro osobní a nákladní automobily; dojezdové doby, stav provozu,
 všechna vozidla.
 
 Formát vychází z DATEX II publikace `roa:ElaboratedDataPublication` <<EN16157-5>>. Stupně provozu podle
-zvyklostí v ČR a kolony doplňuje *rozšíření NDIC* (rozšíření úrovně B
-podle <<EN16157-1>>). Používá model DATEX II 3.7; kvalitu dat a počet vozidel nesou nativní atributy modelu.
+zvyklostí v ČR a kolony doplňuje *rozšíření NDIC* (zpětně kompatibilní rozšíření vložené do rozšiřujícího bodu
+`_trafficStatusExtension` třídy `roa:TrafficStatus`). Používá model DATEX II 3.7; kvalitu dat a počet vozidel nesou nativní atributy modelu.
 
 [[obalka]]
 === Obálka a hlavička publikace
