@@ -205,7 +205,9 @@ include::{samplesdir}/fcd-congestion.xml[tag=status,indent=0]
 The extension is in a separate namespace `http://ndic.cz/datex2/fcd/extension/1.0` (prefix `ndic`) and is
 inserted into the extension point `_trafficStatusExtension` of the class `roa:TrafficStatus`; it applies to all
 vehicles. The extension schema `cz-ndic_d2-fcd-extension-1.0.xsd` is part of the specification package
-(directory `schema`) and messages are validated against it as well.
+(directory `schema`). Full validation including the extension is possible with the wrapper schema
+`cz-ndic_d2-fcd-status-validation.xsd` (it imports the entry schema and the extension schema);
+`DATEXII_3_D2Payload.xsd` alone does not check the content of the extension point.
 
 [cols="2,1,4",options="header"]
 |===

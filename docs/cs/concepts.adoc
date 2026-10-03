@@ -202,7 +202,8 @@ include::{samplesdir}/fcd-congestion.xml[tag=status,indent=0]
 Rozšíření je v samostatném jmenném prostoru `http://ndic.cz/datex2/fcd/extension/1.0` (prefix `ndic`)
 a vkládá se do rozšiřujícího bodu `_trafficStatusExtension` třídy `roa:TrafficStatus`; vztahuje se ke všem
 vozidlům. Schéma rozšíření `cz-ndic_d2-fcd-extension-1.0.xsd` je součástí balíčku specifikace (adresář
-`schema`) a zprávy se validují i proti němu.
+`schema`). Úplnou validaci včetně rozšíření umožňuje obalové schéma `cz-ndic_d2-fcd-status-validation.xsd`
+(importuje vstupní schéma i schéma rozšíření); samotné `DATEXII_3_D2Payload.xsd` obsah rozšiřujícího bodu nekontroluje.
 
 [cols="2,1,4",options="header"]
 |===
