@@ -41,5 +41,5 @@ QueueInformation:
 Queue:
   _: Queue on the segment – length and position relative to the start of the segment in the direction of traffic.
   queueLength: Total length of congestion on the segment in metres; it may differ from the length between `fromPoint` and `toPoint` (there may be several congestions on the segment).
-  fromPoint: Tail of the queue (where vehicles arrive) as the distance from the start of the segment in the direction of travel in percent of its length (0–100).
-  toPoint: Head of the queue as the distance from the start of the segment in the direction of travel in percent of its length (0–100).
+  fromPoint: Start of the queue (where vehicles enter it) as the distance from the start of the segment in the direction of travel in percent of its length (0–100).
+  toPoint: End of the queue (its head, where vehicles leave it) as the distance from the start of the segment in the direction of travel in percent of its length (0–100).
