@@ -146,8 +146,8 @@ The traffic status is a value of the enumeration `roa:TrafficStatusEnum` accordi
 |===
 |Value |Meaning |Speed ratio
 |`stationary` |stationary traffic |< 10 %
-|`queuing` |queues, stop-and-go traffic |10–25 %
-|`slow` |slow traffic |25–75 %
+|`queuing` |queues, stop-and-go traffic |10 % or more, less than 25 %
+|`slow` |slow traffic |25 % or more, less than 75 %
 |`freeFlow` |free flow |≥ 75 %
 |`unknown` |status not known |–
 |===

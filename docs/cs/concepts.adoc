@@ -144,8 +144,8 @@ rychlosti a rychlosti volného provozu:
 |===
 |Hodnota |Význam |Poměr rychlostí
 |`stationary` |stojící doprava |< 10 %
-|`queuing` |kolony, provoz popojíždí |10–25 %
-|`slow` |zpomalený provoz |25–75 %
+|`queuing` |kolony, provoz popojíždí |10 % a více, méně než 25 %
+|`slow` |zpomalený provoz |25 % a více, méně než 75 %
 |`freeFlow` |plynulý provoz |≥ 75 %
 |`unknown` |stav není znám |–
 |===
