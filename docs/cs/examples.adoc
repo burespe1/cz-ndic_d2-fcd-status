@@ -16,7 +16,7 @@ include::{samplesdir}/fcd-all-lorry-car-sample.xml[tags=**]
 
 Obálka a hlavička::
 Kořen `d2:payload` typu `roa:ElaboratedDataPublication` s atributy `@profileName`, `@profileVersion`
-a identifikací rozšíření `@extensionName`, `@extensionVersion`, `feedType` odkazuje na zdroj dat; perioda publikace 300 s (`periodDefault`),
+a identifikací rozšíření `@extensionName`, `@extensionVersion`, `feedType` odkazuje na distribuci (zdroj dat); perioda publikace 300 s (`periodDefault`),
 čas výpočtu `timeDefault`.
 
 Stav provozu::

@@ -16,7 +16,7 @@ include::{samplesdir}/fcd-all-lorry-car-sample.xml[tags=**]
 Envelope and header::
 Root `d2:payload` of type `roa:ElaboratedDataPublication` with the attributes `@profileName`,
 `@profileVersion` and the extension identification `@extensionName`, `@extensionVersion`; `feedType` refers
-to the data source; publication period 300 s (`periodDefault`), calculation time `timeDefault`.
+to the distribution (data source); publication period 300 s (`periodDefault`), calculation time `timeDefault`.
 
 Traffic status::
 For all vehicles the speed is 111 km/h at a free-flow speed of 130 km/h (85 %), hence the status is
