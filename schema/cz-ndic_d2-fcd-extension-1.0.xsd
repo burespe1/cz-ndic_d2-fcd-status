@@ -36,7 +36,7 @@
       <xs:documentation>Level of traffic according to the national classification, derived from the ratio of the current speed to the free-flow speed on the segment.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="trafficLevelValue" type="ndic:TrafficLevelEnum" minOccurs="1" maxOccurs="1">
+      <xs:element name="trafficLevelValue" type="ndic:_TrafficLevelEnum" minOccurs="1" maxOccurs="1">
         <xs:annotation>
           <xs:documentation>Level of traffic (level1 to level5).</xs:documentation>
         </xs:annotation>
@@ -44,6 +44,13 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="_TrafficLevelEnum">
+    <xs:simpleContent>
+      <xs:extension base="ndic:TrafficLevelEnum">
+        <xs:attribute name="_extendedValue" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
   <xs:simpleType name="TrafficLevelEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="level1">
@@ -61,6 +68,7 @@
       <xs:enumeration value="level5">
         <xs:annotation><xs:documentation>Traffic breakdown, vehicles stationary or moving very slowly in queues (speed ratio 0–20 %).</xs:documentation></xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="_extended" />
     </xs:restriction>
   </xs:simpleType>
 
