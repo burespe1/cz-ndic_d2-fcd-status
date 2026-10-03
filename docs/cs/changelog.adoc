@@ -10,7 +10,7 @@
    se nepoužívají; kořen je `d2:payload`, formát určují atributy `@profileName` a `@profileVersion`.
 ** Kvalitu dat a počet vozidel nenese rozšíření NDIC, ale nativní atributy modelu.
 ** Stav provozu, stupeň provozu a kolony se poskytují jen pro všechna vozidla; rozšíření NDIC neobsahuje
-   typ vozidla. Rychlosti a dojezdové doby zůstávají i pro osobní a nákladní automobily.
+   typ vozidla. Rychlosti (aktuální i při volném provozu) zůstávají i pro osobní a nákladní automobily; dojezdové doby a zpoždění se uvádějí jen pro všechna vozidla.
 ** Začátek a konec kolony (`fromPoint`, `toPoint`) se uvádějí v procentech délky segmentu (0–100,
    nejvýše dvě desetinná místa).
 ** Rozšíření NDIC má vlastní schéma `cz-ndic_d2-fcd-extension-1.0.xsd`.

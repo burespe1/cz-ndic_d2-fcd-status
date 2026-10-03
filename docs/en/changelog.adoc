@@ -12,7 +12,7 @@
 ** Data quality and the number of vehicles are carried by native attributes of the model, not by the NDIC
    extension.
 ** Traffic status, level of traffic and queues are provided for all vehicles only; the NDIC extension
-   contains no vehicle type. Speeds and travel times remain available also for cars and lorries.
+   contains no vehicle type. Speeds (current and free-flow) remain available also for cars and lorries; travel times and delays are given for all vehicles only.
 ** The start and end of a queue (`fromPoint`, `toPoint`) are given in per cent of the segment length
    (0–100, at most two decimal places).
 ** The NDIC extension has its own schema `cz-ndic_d2-fcd-extension-1.0.xsd`.
