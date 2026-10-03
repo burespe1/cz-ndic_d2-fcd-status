@@ -8,5 +8,6 @@ Formát převeden na model DATEX II 3.7 (dříve cz-ndic_d2-fcd-v1.1 (DATEX II 2
 * Formát identifikují atributy `@profileName` a `@profileVersion`; `feedType` identifikuje distribuci (`x-source:…`), `feedDescription` se nepoužívá.
 * Rozšíření NDIC (stupeň provozu, kolony) má vlastní schéma `schema/cz-ndic_d2-fcd-extension-1.0.xsd`; stav provozu jen pro všechna vozidla, bez typu vozidla.
 * Začátek a konec kolony v procentech délky segmentu (0–100).
+* Kvalita dat v procentech 0–100 (dříve 0–1).
 
 Podrobný popis viz dokumentace formátu (příloha Historie změn dokumentace).
