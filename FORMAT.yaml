@@ -15,7 +15,7 @@ model:
   version: '3.7'
   publication: ElaboratedDataPublication
   extensions:
-  - cz-ndic FCD extension 1.0 (http://ndic.cz/datex2/fcd/extension/1.0)
+  - cz-ndic_d2-fcd-extension 1.0 (http://ndic.cz/datex2/fcd/extension/1.0)
 schema:
   dir: schema
   entry: DATEXII_3_D2Payload.xsd
