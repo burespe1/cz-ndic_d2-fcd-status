@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- cz-ndic_d2-fcd-status 2.0: validation wrapper (entry schema + NDIC extension schema) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:import namespace="http://datex2.eu/schema/3/d2Payload" schemaLocation="DATEXII_3_D2Payload.xsd"/>
+  <xs:import namespace="http://ndic.cz/datex2/fcd/extension/1.0" schemaLocation="cz-ndic_d2-fcd-extension-1.0.xsd"/>
+</xs:schema>

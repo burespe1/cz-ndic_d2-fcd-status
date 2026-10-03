@@ -11,6 +11,8 @@
    `@profileVersion`.
 ** Data quality and the number of vehicles are carried by native attributes of the model, not by the NDIC
    extension.
+** Data quality (`@supplierCalculatedDataQuality`) is a percentage 0–100 (previously 0–1); the segment is
+   identified only by `pertinentLocation` (the `source` element is not used).
 ** Traffic status, level of traffic and queues are provided for all vehicles only; the NDIC extension
    contains no vehicle type. Speeds and travel times remain available also for cars and lorries.
 ** The start and end of a queue (`fromPoint`, `toPoint`) are given in per cent of the segment length

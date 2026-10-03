@@ -5,7 +5,7 @@
   <com:publicationTime>2026-09-30T01:17:58+02:00</com:publicationTime>
   <com:publicationCreator>
     <com:country>cz</com:country>
-    <com:nationalIdentifier>ŘSD</com:nationalIdentifier>
+    <com:nationalIdentifier>NDIC</com:nationalIdentifier>
   </com:publicationCreator>
   <!-- end::header[] -->
   <roa:periodDefault>300</roa:periodDefault>

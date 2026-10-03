@@ -9,6 +9,8 @@
 ** Formát je převeden na model DATEX II 3.7. Obálky `d2LogicalModel` a `exchange`
    se nepoužívají; kořen je `d2:payload`, formát určují atributy `@profileName` a `@profileVersion`.
 ** Kvalitu dat a počet vozidel nenese rozšíření NDIC, ale nativní atributy modelu.
+** Kvalita dat (`@supplierCalculatedDataQuality`) je v procentech 0–100 (dříve 0–1); segment identifikuje jen
+   `pertinentLocation` (element `source` se nepoužívá).
 ** Stav provozu, stupeň provozu a kolony se poskytují jen pro všechna vozidla; rozšíření NDIC neobsahuje
    typ vozidla. Rychlosti a dojezdové doby zůstávají i pro osobní a nákladní automobily.
 ** Začátek a konec kolony (`fromPoint`, `toPoint`) se uvádějí v procentech délky segmentu (0–100,

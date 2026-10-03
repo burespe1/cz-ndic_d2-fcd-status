@@ -2,18 +2,18 @@
 
 Formát poskytuje stavové informace o dopravě získané z plovoucích vozidel (FCD) na sadě předem
 definovaných úseků silniční sítě (segmentů): dojezdové doby, rychlost dopravního proudu, stav provozu
-a stupně provozu, odhad délky a polohy kolon. Rychlosti se poskytují souhrnně pro všechna vozidla
-a odděleně pro osobní a nákladní automobily; dojezdové doby, stav provozu, stupeň provozu a kolony jen pro
-všechna vozidla.
+a stupně provozu, odhad délky a polohy kolon. Rychlosti a dojezdové doby se poskytují souhrnně pro všechna
+vozidla a odděleně pro osobní a nákladní automobily; stav provozu, stupeň provozu a kolony jen pro všechna
+vozidla.
 
 Formát vychází z DATEX II publikace `roa:ElaboratedDataPublication` <<EN16157-5>>. Stupně provozu podle
-zvyklostí v ČR a kolony doplňuje *rozšíření NDIC* (rozšíření úrovně B
-podle <<EN16157-1>>). Používá model DATEX II 3.7; kvalitu dat a počet vozidel nesou nativní atributy modelu.
+zvyklostí v ČR a kolony doplňuje *rozšíření NDIC* (rozšíření úrovně B podle <<EN16157-1>>, vložené do
+rozšiřujícího bodu `_trafficStatusExtension` třídy `roa:TrafficStatus`). Používá model DATEX II 3.7; kvalitu dat a počet vozidel nesou nativní atributy modelu.
 
 [[obalka]]
 === Obálka a hlavička publikace
 
-Každá zpráva je dokument DATEX II 3 s kořenovým elementem `d2:payload`. Atribut `xsi:type` kořenového elementu určuje typ
+Každá zpráva je dokument DATEX II 3 s kořenovým elementem `d2:payload`. Atribut `@xsi:type` kořenového elementu určuje typ
 publikace (zde `roa:ElaboratedDataPublication`), atribut `modelBaseVersion="3"` verzi modelu a atribut `@lang` výchozí jazyk
 textů.
 
@@ -26,14 +26,15 @@ Formát, podle kterého je zpráva sestavena, identifikují výhradně atributy 
 
 Hlavička publikace obsahuje:
 
-* `feedType` – identifikátor zdroje dat, ze kterého zpráva pochází:
+* `feedType` – identifikátor zdroje dat (distribuce) v registru národního přístupového bodu <<nap>>:
 ** formát zprávy určují atributy `@profileName` a `@profileVersion`, nikoli `feedType`,
 ** element `feedDescription` se nepoužívá.
-* `publicationTime` – čas vytvoření obsahu publikace; pokud se obsah od předchozí publikace nezměnil, zůstává
-  čas původní; nový čas vzniká jen se změnou obsahu.
+* `publicationTime` – čas vygenerování publikace; publikace se vydává periodicky a každé vygenerování (v každé
+  periodě) má nový čas, i když se hodnoty nezměnily. Je-li soubor vystaven mimo periodu aktualizace (sestaven
+  z předchozích hodnot beze změny obsahu), `publicationTime` se nemění; mění se jen čas vystavení souboru.
 * `publicationCreator` – poskytovatel publikace:
 ** kód země malými písmeny (`cz`),
-** zkratka poskytovatele (`nationalIdentifier`).
+** zkratka poskytovatele (`nationalIdentifier`), vždy `NDIC`.
 * `headerInformation` – způsob nakládání s informacemi; NDIC uvádí vždy:
 ** `confidentiality` = `noRestriction`,
 ** `informationStatus` = `real`.
@@ -81,10 +82,10 @@ Rozsah informací podle segmentu:
 * Segmenty s *odděleným dopravním proudem* (více pruhů, kde se rychlosti osobních a nákladních automobilů
   liší) mají navíc pro osobní (`car`) a nákladní (`lorry`) automobily:
 ** aktuální rychlost (`roa:TrafficSpeed`),
-** rychlost volného provozu (`roa:TravelTimeData` jen s `freeFlowSpeed`).
-* Jen pro všechna vozidla se uvádějí:
-** dojezdová doba, dojezdová doba při volném provozu a zpoždění,
-** stav provozu, stupeň provozu a kolony (`roa:TrafficStatus` typ vozidla neuvádí).
+** dojezdovou dobu, dojezdovou dobu při volném provozu, zpoždění a rychlost volného provozu
+   (`roa:TravelTimeData`); dojezdové doby se pro osobní a nákladní automobily liší.
+* Jen pro všechna vozidla se uvádějí stav provozu, stupeň provozu a kolony (`roa:TrafficStatus` typ vozidla
+  neuvádí).
 
 Typ vozidla se uvádí:
 
@@ -144,8 +145,8 @@ rychlosti a rychlosti volného provozu:
 |===
 |Hodnota |Význam |Poměr rychlostí
 |`stationary` |stojící doprava |< 10 %
-|`queuing` |kolony, provoz popojíždí |10–25 %
-|`slow` |zpomalený provoz |25–75 %
+|`queuing` |kolony, provoz popojíždí |10 % a více, méně než 25 %
+|`slow` |zpomalený provoz |25 % a více, méně než 75 %
 |`freeFlow` |plynulý provoz |≥ 75 %
 |`unknown` |stav není znám |–
 |===
@@ -202,7 +203,8 @@ include::{samplesdir}/fcd-congestion.xml[tag=status,indent=0]
 Rozšíření je v samostatném jmenném prostoru `http://ndic.cz/datex2/fcd/extension/1.0` (prefix `ndic`)
 a vkládá se do rozšiřujícího bodu `_trafficStatusExtension` třídy `roa:TrafficStatus`; vztahuje se ke všem
 vozidlům. Schéma rozšíření `cz-ndic_d2-fcd-extension-1.0.xsd` je součástí balíčku specifikace (adresář
-`schema`) a zprávy se validují i proti němu.
+`schema`). Úplnou validaci včetně rozšíření umožňuje obalové schéma `cz-ndic_d2-fcd-status-validation.xsd`
+(importuje vstupní schéma i schéma rozšíření); samotné `DATEXII_3_D2Payload.xsd` obsah rozšiřujícího bodu nekontroluje.
 
 [cols="2,1,4",options="header"]
 |===

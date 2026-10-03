@@ -5,7 +5,7 @@
   <com:publicationTime>2026-09-30T01:17:58+02:00</com:publicationTime>
   <com:publicationCreator>
     <com:country>cz</com:country>
-    <com:nationalIdentifier>ŘSD</com:nationalIdentifier>
+    <com:nationalIdentifier>NDIC</com:nationalIdentifier>
   </com:publicationCreator>
   <!-- end::header[] -->
   <!-- tag::timing[] -->
@@ -126,6 +126,15 @@
         <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
       <roa:vehicleType>car</roa:vehicleType>
+      <roa:travelTime numberOfInputValuesUsed="3">
+        <roa:duration>88</roa:duration>
+      </roa:travelTime>
+      <roa:freeFlowTravelTime>
+        <roa:duration>74</roa:duration>
+      </roa:freeFlowTravelTime>
+      <roa:travelTimeDelay>
+        <roa:duration>14</roa:duration>
+      </roa:travelTimeDelay>
       <roa:freeFlowSpeed>
         <com:speed>130</com:speed>
       </roa:freeFlowSpeed>
@@ -140,6 +149,15 @@
         <roa:timeValue>2026-09-30T01:17:00+02:00</roa:timeValue>
       </roa:measurementOrCalculationTime>
       <roa:vehicleType>lorry</roa:vehicleType>
+      <roa:travelTime numberOfInputValuesUsed="7">
+        <roa:duration>96</roa:duration>
+      </roa:travelTime>
+      <roa:freeFlowTravelTime>
+        <roa:duration>120</roa:duration>
+      </roa:freeFlowTravelTime>
+      <roa:travelTimeDelay>
+        <roa:duration>0</roa:duration>
+      </roa:travelTimeDelay>
       <roa:freeFlowSpeed>
         <com:speed>80</com:speed>
       </roa:freeFlowSpeed>

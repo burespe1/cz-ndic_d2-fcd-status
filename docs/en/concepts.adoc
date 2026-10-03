@@ -2,19 +2,19 @@
 
 The format provides traffic state information obtained from floating car data (FCD) on a set of predefined
 sections of the road network (segments): travel times, traffic speed, traffic status and level of traffic,
-and an estimate of the length and position of queues. Speeds are provided for all vehicles together and
-separately for cars and lorries; travel times, traffic status, level of traffic and queues for all vehicles
+and an estimate of the length and position of queues. Speeds and travel times are provided for all vehicles
+together and separately for cars and lorries; traffic status, level of traffic and queues for all vehicles
 only.
 
 The format is based on the DATEX II `roa:ElaboratedDataPublication` <<EN16157-5>>. Levels of traffic as used
-in the Czech Republic and queues are added by the *NDIC extension* (level B extension according to
-<<EN16157-1>>). It uses the DATEX II 3.7 model; data quality and the number of vehicles are carried by
+in the Czech Republic and queues are added by the *NDIC extension* (a level B extension according to <<EN16157-1>>, placed in the
+extension point `_trafficStatusExtension` of `roa:TrafficStatus`). It uses the DATEX II 3.7 model; data quality and the number of vehicles are carried by
 native attributes of the model.
 
 [[obalka]]
 === Envelope and publication header
 
-Each message is a DATEX II 3 document with the root element `d2:payload`. The `xsi:type` attribute of the
+Each message is a DATEX II 3 document with the root element `d2:payload`. The `@xsi:type` attribute of the
 root element determines the publication type (here `roa:ElaboratedDataPublication`), the attribute
 `modelBaseVersion="3"` the model version and the attribute `@lang` the default language of texts.
 
@@ -27,15 +27,17 @@ The format according to which the message is built is identified solely by attri
 
 The publication header contains:
 
-* `feedType` – identifier of the data source the message comes from:
+* `feedType` – identifier of the data source (distribution) in the register of the national access point <<nap>>:
 ** the format of the message is identified by the `@profileName` and `@profileVersion` attributes, not by
    `feedType`,
 ** the `feedDescription` element is not used.
-* `publicationTime` – time the publication content was created; if the content has not changed since the
-  previous publication, the original time is kept; a new time is set only when the content changes.
+* `publicationTime` – time the publication was generated; the publication is issued periodically and every
+  generated publication (in every period) has a new time, even if the values have not changed. If a file is
+  made available outside the update period (assembled from previous values without a change of content),
+  `publicationTime` does not change; only the time the file was made available changes.
 * `publicationCreator` – publisher:
 ** country code in lower case (`cz`),
-** the publisher's abbreviation (`nationalIdentifier`).
+** the publisher's abbreviation (`nationalIdentifier`), always `NDIC`.
 * `headerInformation` – handling of the information; NDIC always states:
 ** `confidentiality` = `noRestriction`,
 ** `informationStatus` = `real`.
@@ -83,10 +85,10 @@ Scope of information by segment:
 * Segments with a *separated traffic flow* (several lanes where speeds of cars and lorries differ)
   additionally carry for cars (`car`) and lorries (`lorry`):
 ** the current speed (`roa:TrafficSpeed`),
-** the free-flow speed (`roa:TravelTimeData` with `freeFlowSpeed` only).
-* For all vehicles only:
-** travel time, free-flow travel time and delay,
-** traffic status, level of traffic and queues (`roa:TrafficStatus` states no vehicle type).
+** the travel time, free-flow travel time, delay and free-flow speed (`roa:TravelTimeData`); travel times
+   of cars and lorries differ.
+* Traffic status, level of traffic and queues are given for all vehicles only (`roa:TrafficStatus` states no
+  vehicle type).
 
 The vehicle type is given:
 
@@ -146,8 +148,8 @@ The traffic status is a value of the enumeration `roa:TrafficStatusEnum` accordi
 |===
 |Value |Meaning |Speed ratio
 |`stationary` |stationary traffic |< 10 %
-|`queuing` |queues, stop-and-go traffic |10–25 %
-|`slow` |slow traffic |25–75 %
+|`queuing` |queues, stop-and-go traffic |10 % or more, less than 25 %
+|`slow` |slow traffic |25 % or more, less than 75 %
 |`freeFlow` |free flow |≥ 75 %
 |`unknown` |status not known |–
 |===
@@ -205,7 +207,9 @@ include::{samplesdir}/fcd-congestion.xml[tag=status,indent=0]
 The extension is in a separate namespace `http://ndic.cz/datex2/fcd/extension/1.0` (prefix `ndic`) and is
 inserted into the extension point `_trafficStatusExtension` of the class `roa:TrafficStatus`; it applies to all
 vehicles. The extension schema `cz-ndic_d2-fcd-extension-1.0.xsd` is part of the specification package
-(directory `schema`) and messages are validated against it as well.
+(directory `schema`). Full validation including the extension is possible with the wrapper schema
+`cz-ndic_d2-fcd-status-validation.xsd` (it imports the entry schema and the extension schema);
+`DATEXII_3_D2Payload.xsd` alone does not check the content of the extension point.
 
 [cols="2,1,4",options="header"]
 |===
