@@ -7,8 +7,8 @@ together and separately for cars and lorries; traffic status, level of traffic a
 only.
 
 The format is based on the DATEX II `roa:ElaboratedDataPublication` <<EN16157-5>>. Levels of traffic as used
-in the Czech Republic and queues are added by the *NDIC extension* (a backward-compatible extension placed in the extension point
-`_trafficStatusExtension` of `roa:TrafficStatus`). It uses the DATEX II 3.7 model; data quality and the number of vehicles are carried by
+in the Czech Republic and queues are added by the *NDIC extension* (a level B extension according to <<EN16157-1>>, placed in the
+extension point `_trafficStatusExtension` of `roa:TrafficStatus`). It uses the DATEX II 3.7 model; data quality and the number of vehicles are carried by
 native attributes of the model.
 
 [[obalka]]
